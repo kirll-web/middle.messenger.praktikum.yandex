@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
 
 import Avatar from './avatar/avatar.hbs?raw';
-import Button from './Button/button.hbs?raw';
+import Button from './button/button.hbs?raw';
 import Form from './form/form.hbs?raw';
 import Input from './input/input.hbs?raw';
 import Navbar from './nav/nav.hbs?raw';
