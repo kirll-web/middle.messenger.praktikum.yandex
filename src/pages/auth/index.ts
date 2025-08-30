@@ -1,0 +1,1 @@
+export { authRender } from './Auth';

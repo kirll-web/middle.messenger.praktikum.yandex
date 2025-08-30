@@ -1,0 +1,23 @@
+<form class="form {{className}}">
+    <h1  class="form-title">{{title}}</h1>
+     <div  class="form-inputs">
+        {{#each inputs}}
+        {{> Input 
+            id=this.id
+            type=this.type
+            label=this.label
+            name=this.name
+            placeholder=this.placeholder
+            className=this.className
+        }}
+    {{/each}}
+     </div>
+    
+    {{#each buttons}}
+        {{> Button 
+            id=this.id
+            text=this.text
+            className=this.className
+        }}
+    {{/each}}
+</form>

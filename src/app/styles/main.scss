@@ -1,0 +1,224 @@
+@use "./variables.scss" as *;
+
+.app,
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app {
+    min-block-size: 100vh;
+}
+
+.container {
+    inline-size: 100%;
+    margin: 0 auto;
+    padding-inline: calc($module * 2);
+}
+
+.button {
+    inline-size: 100%;
+    padding: calc($module * 1.5);
+
+    background-color: $primary-color;
+    border-radius: $module;
+
+    color: $secondary-color-text;
+    font-size: calc($module * 1.7);
+
+    &_light {
+        padding: 0 $module;
+        background-color: transparent;
+        color: $primary-color;
+        font-size: 13px;
+    }
+
+    &_danger {
+        color: $danger;
+    }
+}
+
+.input {
+    inline-size: 100%;
+    padding: calc($module * 0.3) 0;
+    font-size: calc($module * 1.7);
+
+    border-block-end: calc($module * 0.13) solid $primary-color;
+
+    &__wrapper {
+        color: $main-color-text;
+
+        &_error {
+            color: $danger;
+        }
+    }
+
+    &__error {
+        font-size: calc($module * 1.5);
+    }
+
+    &__label {
+        margin-block-end: $module;
+        color: $color-hint;
+        font-size: 11px;
+    }
+}
+
+.form {
+    inline-size: 100%;
+    max-inline-size: calc($module * 42.5);
+    margin: auto;
+    padding: calc($module * 6.25) calc($module * 3.75) calc($module * 3);
+
+    border-radius: calc($module * 1.5);
+    box-shadow: 0 0 6px rgba(#000, 14%);
+
+    &-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: calc($module * 1.7);
+    }
+
+    &-button {
+        margin-block-start: calc($module * 17.875);
+
+        &_registration {
+            margin-block-start: calc($module * 6);
+        }
+
+        &_light {
+            inline-size: calc($module * 35);
+            margin-block-start: calc($module * 2);
+        }
+    }
+}
+
+.form-title {
+    margin-block-end: calc($module * 5);
+    font-size: 23px;
+    text-align: center;
+}
+
+.error-page {
+    &__title,
+    &__description {
+        text-align: center;
+    }
+
+    &__title {
+        margin-block-end: calc($module * 2.5);
+        font-size: calc($module * 5);
+    }
+
+    &__description {
+        margin-block-end: calc($module * 8.5);
+        font-size: calc($module * 2.5);
+    }
+}
+
+.avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    inline-size: calc($module * 16.25);
+    block-size: calc($module * 16.25);
+
+    background-color: $avatar-bg;
+    border-radius: 50%;
+
+    &__img {
+        inline-size: 100%;
+        block-size: 100%;
+        border-radius: 50%;
+
+        object-fit: cover;
+    }
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    inline-size: 100%;
+    max-inline-size: calc($module * 62);
+
+    &-field {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        inline-size: 100%;
+
+        font-size: calc($module * 1.63);
+
+        &__input {
+            padding-block: calc($module * 1.25);
+            color: $color-hint;
+            text-align: end;
+        }
+    }
+
+    .profile__inputs,
+    .profile__buttons {
+        inline-size: 100%;
+        margin-block-start: calc($module * 7.5);
+
+        > * {
+            border-block-end: solid 1px $separator;
+
+            &:last-child {
+                border-block-end: none;
+            }
+        }
+    }
+
+    .profile__buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__button {
+        padding-block: calc($module * 1.25);
+        padding-inline: 0;
+        border-radius: 0;
+        text-align: start;
+
+        &_save {
+            max-inline-size: calc($module * 35);
+            margin-block-start: calc($module * 7.5);
+
+            &_password {
+                margin-block-start: calc($module * 20.25);
+            }
+        }
+    }
+
+    &__name {
+        margin-block-start: calc($module * 2.625);
+        font-weight: 600;
+    }
+}
+
+.navbar {
+    &__list {
+        position: absolute;
+        inset-block-start: calc($module * 2);
+        inset-inline-start: 50%;
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc($module * 2);
+        justify-content: space-around;
+
+        transform: translateX(-50%);
+    }
+
+    &__item {
+        min-inline-size: max-content;
+    }
+}

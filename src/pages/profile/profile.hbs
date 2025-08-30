@@ -1,0 +1,46 @@
+<div class="container">
+    <form class="profile {{className}}">
+        {{> Avatar
+            id=avatar.id
+            name=avatar.name
+            className=avatar.className
+            src=avatar.src
+            hasAvatar=avatar.hasAvatar
+        }}
+        {{#unless (or edit changePassword)}}
+           <h1 class="profile__name">{{name}}</h1>
+        {{/unless}}
+        <div  class="profile__inputs">
+            {{#each fields}}
+                {{> ProfileField 
+                    id=this.id
+                    label=this.label
+                    type=this.type
+                    name=this.name
+                    value=this.value
+                    className=this.className
+                }}
+            {{/each}}
+        </div>
+        {{#if (or edit changePassword)}}
+            {{> Button
+                id=saveButton.id
+                text=saveButton.text
+                className=saveButton.className
+            }}
+        {{else}}
+            <div class="profile__buttons">
+                {{#each buttons}}
+                    {{> Button
+                        id=this.id
+                        text=this.text
+                        className=this.className
+                    }}
+                {{/each}}
+            </div>   
+        {{/if}}    
+
+    </form>
+
+</div>
+{{> Navbar }}

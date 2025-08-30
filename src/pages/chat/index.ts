@@ -1,0 +1,1 @@
+export { chatRender } from './Chat';
