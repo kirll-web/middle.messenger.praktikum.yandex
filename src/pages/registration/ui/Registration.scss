@@ -1,0 +1,7 @@
+.form {
+    &-button {
+        &_registration {
+            margin-block-start: calc($module * 6);
+        }
+    }
+}

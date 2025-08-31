@@ -1,0 +1,25 @@
+.input {
+    inline-size: 100%;
+    padding: calc($module * 0.3) 0;
+    font-size: calc($module * 1.7);
+
+    border-block-end: calc($module * 0.13) solid $primary-color;
+
+    &__wrapper {
+        color: $main-color-text;
+
+        &_error {
+            color: $danger;
+        }
+    }
+
+    &__error {
+        font-size: calc($module * 1.5);
+    }
+
+    &__label {
+        margin-block-end: $module;
+        color: $color-hint;
+        font-size: 11px;
+    }
+}

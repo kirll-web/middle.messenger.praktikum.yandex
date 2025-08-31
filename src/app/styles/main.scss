@@ -1,0 +1,43 @@
+@use "@shared/styles/variables" as *;
+@import "@shared/ui/avatar/avatar";
+@import "@shared/ui/button/button";
+@import "@shared/ui/form/form";
+@import "@shared/ui/input/input";
+@import "@shared/ui/nav/navbar";
+@import "@shared/ui/profile/profile-field";
+
+.app,
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app {
+    min-block-size: 100vh;
+}
+
+.container {
+    inline-size: 100%;
+    margin: 0 auto;
+    padding-inline: calc($module * 2);
+}
+
+.hidden {
+    position: absolute;
+
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    inline-size: 100%;
+    block-size: inherit;
+}

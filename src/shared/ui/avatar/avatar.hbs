@@ -1,0 +1,6 @@
+<div class='avatar {{className}}'>
+    <label class='avatar__label' for="{{name}}">
+        <img class="{{#if hasAvatar}}avatar__img{{else}}avatar__placeholder{{/if}}" src='{{src}}' alt="avatar"/>
+    </label>
+    <input id="{{name}}" type="file" name="{{name}}" accept="{{availableTypes}}" class="hidden">
+</div>

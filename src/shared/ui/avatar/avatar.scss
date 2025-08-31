@@ -1,0 +1,23 @@
+.avatar {
+    inline-size: calc($module * 16.25);
+    block-size: calc($module * 16.25);
+    background-color: $avatar-bg;
+    border-radius: 50%;
+
+    &__img {
+        inline-size: 100%;
+        block-size: 100%;
+        border-radius: 50%;
+
+        object-fit: cover;
+    }
+
+    &__label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        inline-size: inherit;
+        block-size: inherit;
+    }
+}
