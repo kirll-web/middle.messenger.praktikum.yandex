@@ -10,7 +10,6 @@ import {
     profileRender,
     registrationRender
 } from '../pages';
-
 import { registrComponents } from '../shared/ui';
 import { RoutePath } from './consts';
 
@@ -42,7 +41,11 @@ class App {
         document.addEventListener('click', this.handleNavigation.bind(this));
     }
 
-    private handleNavigation(event: MouseEvent) {
+    private handleNavigation(event: MouseEvent | null) {
+        if (!event) {
+            return;
+        }
+
         const target = event.target as HTMLElement;
         if (target.classList.contains('navbar__link')) {
             event.preventDefault();

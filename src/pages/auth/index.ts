@@ -1,1 +1,1 @@
-export { authRender } from './Auth';
+export { authRender } from './ui/Auth';

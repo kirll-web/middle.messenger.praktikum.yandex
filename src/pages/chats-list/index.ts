@@ -1,1 +1,1 @@
-export { chatsListRender } from './ChatsList';
+export { chatsListRender } from './ui/ChatsList';

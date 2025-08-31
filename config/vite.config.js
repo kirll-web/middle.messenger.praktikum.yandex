@@ -20,8 +20,17 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': resolve(__dirname, '../src'),
-            '@styles': resolve(__dirname, '../src/styles') 
+            '@styles': resolve(__dirname, '../src/styles'),
+            '@assets': resolve(__dirname, '../src/assets'),
+            '@shared': resolve(__dirname, '../src/shared')
         }
     },
-    assetsInclude: ['**/*.hbs']
+    assetsInclude: ['**/*.hbs'],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `@use "@shared/styles/variables.scss" as *;`
+            }
+        }
+    }
 });
