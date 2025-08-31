@@ -1,0 +1,49 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    inline-size: 100%;
+    max-inline-size: calc($module * 62);
+
+    &__inputs,
+    &__buttons {
+        inline-size: 100%;
+        margin-block-start: calc($module * 7.5);
+
+        > * {
+            border-block-end: solid 1px $separator;
+
+            &:last-child {
+                border-block-end: none;
+            }
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__button {
+        padding: calc($module * 1.25) 0;
+        border-radius: 0;
+        text-align: start;
+
+        &_save {
+            max-inline-size: calc($module * 35);
+            margin-block-start: calc($module * 7.5);
+
+            &_password {
+                margin-block-start: calc($module * 20.25);
+            }
+        }
+    }
+
+    &__name {
+        margin-block-start: calc($module * 2.625);
+        font-weight: 600;
+    }
+}

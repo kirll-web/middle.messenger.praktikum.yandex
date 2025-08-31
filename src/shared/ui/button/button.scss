@@ -1,0 +1,21 @@
+.button {
+    inline-size: 100%;
+    padding: calc($module * 1.5);
+
+    background-color: $primary-color;
+    border-radius: $module;
+
+    color: $secondary-color-text;
+    font-size: calc($module * 1.7);
+
+    &_light {
+        padding: 0 $module;
+        background-color: transparent;
+        color: $primary-color;
+        font-size: 13px;
+    }
+
+    &_danger {
+        color: $danger;
+    }
+}

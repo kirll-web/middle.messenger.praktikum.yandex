@@ -1,0 +1,34 @@
+.form {
+    inline-size: 100%;
+    max-inline-size: calc($module * 42.5);
+    margin: auto;
+    padding: calc($module * 6.25) calc($module * 3.75) calc($module * 3);
+
+    border-radius: calc($module * 1.5);
+    box-shadow: 0 0 6px rgba(#000, 14%);
+
+    &-title {
+        margin-block-end: calc($module * 5);
+        font-size: 23px;
+        text-align: center;
+    }
+
+    &-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: calc($module * 1.7);
+    }
+
+    &-button {
+        margin-block-start: calc($module * 17.875);
+
+        &_registration {
+            margin-block-start: calc($module * 6);
+        }
+
+        &_light {
+            inline-size: calc($module * 35);
+            margin-block-start: calc($module * 2);
+        }
+    }
+}
