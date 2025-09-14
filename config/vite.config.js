@@ -21,8 +21,10 @@ export default defineConfig({
         alias: {
             '@': resolve(__dirname, '../src'),
             '@styles': resolve(__dirname, '../src/styles'),
+            '@app': resolve(__dirname, '../src/app'),
             '@assets': resolve(__dirname, '../src/assets'),
-            '@shared': resolve(__dirname, '../src/shared')
+            '@shared': resolve(__dirname, '../src/shared'),
+            '@pages': resolve(__dirname, '../src/pages')
         }
     },
     assetsInclude: ['**/*.hbs'],
