@@ -1,5 +1,5 @@
 import { Block, insertToObject } from '../../utils';
-import template from './Input.hbs?raw';
+import templateI from './Input.hbs?raw';
 
 export type InputProps = {
     id: string;
@@ -31,6 +31,6 @@ export class Input extends Block {
     }
 
     override render() {
-        return template;
+        return templateI;
     }
 }
