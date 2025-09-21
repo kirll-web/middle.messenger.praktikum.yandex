@@ -240,7 +240,6 @@ export class ProfileForm extends Block<Props> {
                         return;
                     }
 
-                    console.log(2);
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
                     const values = Object.fromEntries(formData.entries());
@@ -269,7 +268,6 @@ export class ProfileForm extends Block<Props> {
 
         this.setProps({
             fields: fields.map((field) => {
-                console.log(field);
                 return new ProfileField(field);
             }),
             edit: type === 'edit' || type === 'changePassword'
