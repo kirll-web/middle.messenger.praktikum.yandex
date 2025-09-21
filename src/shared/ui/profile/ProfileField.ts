@@ -78,11 +78,10 @@ export class ProfileField extends Block<Props> {
         const valid = onValidate(value);
 
         if (valid) {
-            console.log('valid', value);
             this.setProps({ error: undefined });
             return true;
         }
-        console.log('not valid', value);
+
         this.setProps({ error: this.inputError });
         return false;
     };

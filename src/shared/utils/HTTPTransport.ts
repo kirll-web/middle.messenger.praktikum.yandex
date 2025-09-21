@@ -16,7 +16,11 @@ function queryStringify(data: Record<string, unknown>) {
             .map((key) => {
                 const value = data[key];
                 if (Array.isArray(value)) {
-                    return `${key}=${value.map((el) => el).join(',')}`;
+                    return `${key}=${encodeURIComponent(value.map((el) => el).join(','))}`;
+                }
+
+                if (typeof value === 'string') {
+                    return `${key}=${encodeURIComponent(value)}`;
                 }
 
                 return `${key}=${value}`;
@@ -62,7 +66,7 @@ export class HTTPTransport {
             const xhr = new XMLHttpRequest();
             const newURl =
                 method === METHODS.GET && data && typeof data === 'object'
-                    ? url + encodeURIComponent(queryStringify(data as Record<string, unknown>))
+                    ? url + queryStringify(data as Record<string, unknown>)
                     : url;
 
             xhr.open(method, newURl);

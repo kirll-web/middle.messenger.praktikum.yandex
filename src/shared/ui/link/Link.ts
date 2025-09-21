@@ -11,7 +11,6 @@ export type LinkProps = {
 
 export class Link extends Block {
     constructor({ id, text, className, href, onClick }: LinkProps) {
-        // console.log(id, text, className, href);
         super({
             id,
             text,

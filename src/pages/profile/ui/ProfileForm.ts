@@ -152,7 +152,7 @@ export class ProfileForm extends Block<Props> {
             name: 'oldPassword',
             error: 'Неправильный старый пароль',
             onValidate: (value: string) => {
-                return Validator.equalsPassword(this.oldPassword, value);
+                return Validator.equalsPassword(this.oldPassword, value) && Validator.validatePassword(value);
             }
         },
         {
@@ -163,17 +163,6 @@ export class ProfileForm extends Block<Props> {
             error: 'Новый пароль не соответствует правилам пароля',
             onValidate: (value: string) => {
                 return Validator.validatePassword(value);
-            }
-        },
-        {
-            id: 'phone',
-            type: 'phone',
-            label: 'Телефон',
-            name: 'phone',
-            value: '+7 (909) 967 30 30',
-            error: 'Неправильный номер телефона',
-            onValidate: (value: string) => {
-                return Validator.validatePhone(value);
             }
         }
     ];
@@ -195,7 +184,7 @@ export class ProfileForm extends Block<Props> {
                 break;
         }
 
-        this.oldPassword = '12345';
+        this.oldPassword = 'Qwerty12345';
         const inputs = fields.map((field) => {
             return new ProfileField(field);
         });
@@ -251,7 +240,6 @@ export class ProfileForm extends Block<Props> {
                         return;
                     }
 
-                    console.log(2);
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
                     const values = Object.fromEntries(formData.entries());
@@ -280,7 +268,6 @@ export class ProfileForm extends Block<Props> {
 
         this.setProps({
             fields: fields.map((field) => {
-                console.log(field);
                 return new ProfileField(field);
             }),
             edit: type === 'edit' || type === 'changePassword'

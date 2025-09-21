@@ -59,10 +59,11 @@ export class AuthPage extends Block {
                     const valid = this.inputs
                         .map((input) => input.isValid())
                         .some((inputValid) => inputValid === false);
-                    console.log(valid);
+
                     if (!valid) {
                         return;
                     }
+
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
 
