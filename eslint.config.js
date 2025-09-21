@@ -1,14 +1,34 @@
+// eslint.config.js
+import eslint from '@eslint/js';
+import prettier from 'eslint-config-prettier';
+import importPlugin from 'eslint-plugin-import';
+import tseslint from 'typescript-eslint';
+
 export default [
-    js.configs.recommended,
     {
-        root: true,
-        extends: ['airbnb', 'airbnb-typescript', 'plugin:prettier/recommended', 'plugin:react-hooks/recommended'],
-        parser: '@typescript-eslint/parser',
-        parserOptions: {
-            project: ['./tsconfig.json', './config/tsc/tsconfig.node.json']
+        ignores: [
+            'dist/**',
+            'node_modules/**',
+            '*.config.js?(x)',
+            '*.d.ts',
+            '**/*.js',
+            'vite.config.ts',
+            'vitest.config.ts'
+        ]
+    },
+    // базовые правила JS
+    eslint.configs.recommended,
+
+    // базовые правила TypeScript
+    ...tseslint.configs.recommended,
+
+    // Prettier для отключения конфликтов
+    prettier,
+
+    {
+        plugins: {
+            import: importPlugin
         },
-        plugins: ['@typescript-eslint'],
-        reportUnusedDisableDirectives: true,
         rules: {
             // TypeScript rules
             '@typescript-eslint/explicit-function-return-type': 'off',
@@ -18,7 +38,7 @@ export default [
 
             // Import rules
             'import/prefer-default-export': 'off',
-            'import/no-default-export': 'error',
+            'import/no-default-export': 'off',
             'import/order': [
                 'error',
                 {
@@ -36,39 +56,17 @@ export default [
                         }
                     ],
                     pathGroupsExcludedImportTypes: ['builtin'],
-                    'newlines-between': 'always',
-                    alphabetize: {
-                        order: 'asc',
-                        caseInsensitive: true
-                    }
+                    'newlines-between': 'always'
                 }
             ],
 
             // General rules
-            'no-console': 'error',
+            'no-console': 'off',
             'no-nested-ternary': 'off',
             'no-param-reassign': 'off',
             'no-plusplus': 'off',
             'no-restricted-syntax': 'off',
-            'no-underscore-dangle': 'off',
-
-            // React rules
-            'react/destructuring-assignment': 'off',
-            'react/function-component-definition': ['error', { namedComponents: 'arrow-function' }],
-            'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
-            'react/no-danger': 'error',
-            'react/require-default-props': 'off',
-            'react/react-in-jsx-scope': 'off'
-        },
-        ignorePatterns: [
-            'dist',
-            'node_modules',
-            '*.config.js?(x)',
-            '*.d.ts',
-            '*.js',
-            'vite.config.ts',
-            'vitest.config.ts',
-            'babel.config.test.cjs'
-        ]
+            'no-underscore-dangle': 'off'
+        }
     }
 ];

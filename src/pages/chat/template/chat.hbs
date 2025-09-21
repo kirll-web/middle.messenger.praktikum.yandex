@@ -1,9 +1,13 @@
 <div class='chat'>
-    {{#unless items}}
+    {{#unless messages}}
         <div class='chat__placeholder'>Выберите чат чтобы отправить сообщение</div>
     {{/unless}}
-    {{#if items}}
-        {{{items}}}
+    {{#if messages}}
+        {{{ChatProfile}}}
+        <div class='messages'>
+            {{{messages}}}
+        </div>
+        {{{ChatFooter}}}
     {{/if}}
     {{{Navbar}}}
 </div>

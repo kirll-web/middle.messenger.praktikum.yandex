@@ -1,2 +1,3 @@
-export { Block, type Props } from './Block';
+export { Block, type BaseProps as Props } from './Block';
+export { HTTPTransport } from './HTTPTransport';
 export { insertToObject } from './insertToObject';

@@ -6,6 +6,5 @@ export enum RoutePath {
     Profile = 'profile',
     EditProfile = 'edit-profile',
     ChangePassword = 'change-password',
-    ChatsList = 'chats-list',
     Chat = 'chat'
 }

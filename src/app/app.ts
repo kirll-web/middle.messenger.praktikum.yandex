@@ -1,9 +1,11 @@
+import Handlebars from 'handlebars';
+
 import { ProfilePage } from '@pages/profile';
 import { Link } from '@shared/ui/link';
 import { render } from '@shared/utils/renderDom';
-import Handlebars from 'handlebars';
-import { AuthPage, ChatListPage, ChatPage, ErrorPage, RegistrationPage } from '../pages';
-import { Navbar, registrComponents } from '../shared/ui';
+
+import { AuthPage, ChatPage, ErrorPage, RegistrationPage } from '../pages';
+import { Navbar } from '../shared/ui';
 import { RoutePath } from './consts';
 
 Handlebars.registerHelper('eq', function (a, b) {
@@ -13,8 +15,6 @@ Handlebars.registerHelper('eq', function (a, b) {
 class App {
     state: {
         currentPage: RoutePath;
-        questions: any[];
-        answers: any[];
     };
 
     appElement: HTMLDivElement;
@@ -22,14 +22,12 @@ class App {
     navbar: Navbar;
 
     constructor() {
-        registrComponents();
         const navbar = new Navbar({
             links: [
                 {
                     text: 'Вход',
                     href: '#login',
                     onClick: () => {
-                        console.log('this.navbar onclick');
                         this.state.currentPage = RoutePath.Auth;
                         this.render();
                     }
@@ -38,7 +36,6 @@ class App {
                     text: 'Регистрация',
                     href: '#registration',
                     onClick: () => {
-                        console.log('this.navbar onclick');
                         this.state.currentPage = RoutePath.Registration;
                         this.render();
                     }
@@ -47,7 +44,6 @@ class App {
                     text: 'Профиль',
                     href: '#profile',
                     onClick: () => {
-                        console.log('this.navbar onclick');
                         this.state.currentPage = RoutePath.Profile;
                         this.render();
                     }
@@ -56,7 +52,6 @@ class App {
                     text: 'Редактировать профиль',
                     href: '#editProfile',
                     onClick: () => {
-                        console.log('this.navbar onclick');
                         this.state.currentPage = RoutePath.EditProfile;
                         this.render();
                     }
@@ -65,25 +60,15 @@ class App {
                     text: 'Редактировать пароль',
                     href: '#changePassword',
                     onClick: () => {
-                        console.log('this.navbar onclick');
                         this.state.currentPage = RoutePath.ChangePassword;
                         this.render();
                     }
                 },
-                {
-                    text: 'Список чатов',
-                    href: '#chatLists',
-                    onClick: () => {
-                        console.log('this.navbar onclick');
-                        this.state.currentPage = RoutePath.ChatsList;
-                        this.render();
-                    }
-                },
+
                 {
                     text: 'Чат',
                     href: '#chat',
                     onClick: () => {
-                        console.log('this.navbar onclick');
                         this.state.currentPage = RoutePath.Chat;
                         this.render();
                     }
@@ -93,9 +78,7 @@ class App {
         this.navbar = navbar;
 
         this.state = {
-            currentPage: RoutePath.Chat,
-            questions: [],
-            answers: []
+            currentPage: RoutePath.Profile
         };
         const appElement = document.getElementById('app') as HTMLDivElement;
         if (!appElement) {
@@ -200,18 +183,7 @@ class App {
             case RoutePath.Chat: {
                 this.appElement.replaceChildren();
 
-                render('#app', new ChatPage({}));
-                break;
-            }
-            case RoutePath.ChatsList: {
-                this.appElement.replaceChildren();
-
-                render(
-                    '#app',
-                    new ChatListPage({
-                        Navbar: this.navbar
-                    })
-                );
+                render('#app', new ChatPage({ Navbar: this.navbar }));
                 break;
             }
 
@@ -233,6 +205,11 @@ class App {
             }
         }
     }
+
+    navigate = (route: RoutePath) => {
+        this.state.currentPage = route;
+        this.render();
+    };
 }
 
 export { App };

@@ -1,0 +1,9 @@
+<div class='form-input__wrapper {{#if error}} form-input__wrapper_error {{/if}} {{className}}'>
+    {{#if label}}
+      <label class='form-input__label' for="{{id}}">{{label}}</label>
+    {{/if}}
+    {{{Input}}}
+    {{#if error}}
+      <span class='form-input__error'>{{error}}<span>
+    {{/if}}
+</div>

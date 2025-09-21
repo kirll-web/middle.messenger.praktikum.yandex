@@ -1,5 +1,6 @@
 import { Avatar } from '@shared/ui';
 import { Block } from '@shared/utils';
+
 import template from '../template/chat-item.hbs?raw';
 import { ChatItemCounter } from './ChatItemCounter';
 import { ChatItemMessage } from './ChatItemMessage';
@@ -11,10 +12,11 @@ export type ChatItemProps = {
     messageCount?: number;
     Avatar: Avatar;
     thisUserMessage?: boolean;
+    onClick(): void;
 };
 
 export class ChatItem extends Block {
-    constructor({ name, lastMessage, time, messageCount, Avatar, thisUserMessage }: ChatItemProps) {
+    constructor({ name, lastMessage, time, messageCount, Avatar, thisUserMessage, onClick }: ChatItemProps) {
         super({
             name,
             lastMessage,
@@ -24,7 +26,10 @@ export class ChatItem extends Block {
                 userMessage: !!thisUserMessage
             }),
             ChatItemCounter: messageCount && new ChatItemCounter({ count: messageCount }),
-            Avatar: Avatar
+            Avatar: Avatar,
+            events: {
+                click: onClick
+            }
         });
     }
 

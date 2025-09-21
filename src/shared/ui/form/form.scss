@@ -24,10 +24,6 @@
     &-button {
         margin-block-start: calc($module * 17.875);
 
-        &_registration {
-            margin-block-start: calc($module * 6);
-        }
-
         &_light {
             inline-size: calc($module * 35);
             margin-block-start: calc($module * 2);

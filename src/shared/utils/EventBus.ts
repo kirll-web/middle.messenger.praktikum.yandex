@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
-export type EventCallback = (...args: any[]) => void;
+export type EventCallback = (...args: unknown[]) => void;
 export class EventBus {
     private listeners: Record<string, EventCallback[]>;
     constructor() {
@@ -23,7 +22,6 @@ export class EventBus {
     }
 
     emit(event: string, ...args: unknown[]) {
-        // console.log('emit', event, args);
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
         }

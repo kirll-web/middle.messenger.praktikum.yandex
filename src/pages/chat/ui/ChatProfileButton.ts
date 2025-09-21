@@ -1,10 +1,9 @@
 import { PopupMenu, PopupMenuButton } from '@shared/ui';
 import { Block } from '@shared/utils';
+
 import template from '../template/chat-profile-button.hbs?raw';
 import { ChatAddUserIcon } from './ChatAddUserIcon';
 import { ChatRemoveUserIcon } from './ChatRemoveUserIcon';
-
-export type ChatProfileButtonProps = {};
 
 export class ChatProfileButton extends Block {
     private menu: PopupMenu;

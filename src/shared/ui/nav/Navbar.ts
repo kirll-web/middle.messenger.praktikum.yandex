@@ -1,4 +1,5 @@
 import { Block } from '@shared/utils';
+
 import { Link } from '../link';
 import template from './navbarBlock.hbs?raw';
 

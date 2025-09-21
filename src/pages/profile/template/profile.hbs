@@ -1,21 +1,6 @@
 <main class='main'>
     <div class='container'>
-        <form class='profile {{className}}'>
-            {{{Avatar}}}
-            {{#unless edit}}
-                <h1 class='profile__name'>{{name}}</h1>
-            {{/unless}}
-            <div class='profile__inputs'>
-                {{{fields}}}
-            </div>
-            {{#if edit}}
-                {{{SaveButton}}}
-            {{else}}
-                <div class='profile__buttons'>
-                    {{{buttons}}}
-                </div>
-            {{/if}}
-        </form>
+        {{{ProfileForm}}}
     </div>
     {{{Navbar}}}
 </main>

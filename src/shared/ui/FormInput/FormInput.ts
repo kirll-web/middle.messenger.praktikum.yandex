@@ -1,48 +1,37 @@
 import { Block } from '../../utils';
 import { Input } from '../input/Input';
-import template from './ProfileField.hbs?raw';
+import template from './FormInput.hbs?raw';
 
-export type ProfileFieldProps = {
+export type FormInputProps = {
     id: string;
     type: string;
     name: string;
-    label: string;
-    disabled?: boolean;
-    value?: string;
+    label?: string;
     className?: string;
     error?: string;
+    onBlur?: (event: FocusEvent) => void;
     onChange?: (event: Event) => void;
-    onValidate?: (value: string) => boolean;
+    onValidate: (value: string) => boolean;
 };
 
-type Props = Omit<ProfileFieldProps, 'id' | 'type' | 'name' | 'id' | 'type' | 'name'> & {
+export type PrivateFormInputProps = {
     Input: Input;
 };
 
-export class ProfileField extends Block<Props> {
+export class FormInput extends Block<Omit<FormInputProps, 'id' | 'type' | 'name'> & PrivateFormInputProps> {
     private value: string = '';
     private inputError: string | undefined;
 
-    constructor({
-        id,
-        type,
-        name,
-        label,
-        className,
-        error,
-        value,
-        disabled = false,
-        onValidate,
-        onChange
-    }: ProfileFieldProps) {
-        const props: Props = {
+    constructor({ id, type, name, label, className, error, onValidate, onChange }: FormInputProps) {
+        super({
+            label,
+            className: ` ${className}`,
+            onValidate,
             Input: new Input({
                 id,
                 type,
                 name,
-                className: 'profile-field__input',
-                value,
-                disabled,
+                className: 'form-input',
                 onBlur: (event) => {
                     const input = event.target as HTMLInputElement;
 
@@ -53,13 +42,9 @@ export class ProfileField extends Block<Props> {
                     const input = event.target as HTMLInputElement;
                     this.value = input.value;
                 }
-            }),
-            onValidate,
-            label,
-            className: className
-        };
+            })
+        });
 
-        super(props);
         this.inputError = error;
     }
 
@@ -68,14 +53,7 @@ export class ProfileField extends Block<Props> {
     };
 
     private validate = (value: string): boolean => {
-        const onValidate = this.props.onValidate;
-
-        if (!onValidate) {
-            return true;
-        }
-
-        const valid = onValidate(value);
-
+        const valid = this.props.onValidate(value);
         if (valid) {
             this.setProps({ error: undefined });
             return true;

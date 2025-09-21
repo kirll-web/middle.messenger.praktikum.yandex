@@ -4,5 +4,8 @@
     &__form {
         display: flex;
         align-items: center;
+        padding-block: calc($module * 1.375);
+
+        border-block-start: 1px solid $separator;
     }
 }

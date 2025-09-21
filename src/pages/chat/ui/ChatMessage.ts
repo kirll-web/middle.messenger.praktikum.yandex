@@ -1,8 +1,7 @@
 import { Block } from '@shared/utils';
-import { messageReadIcon } from '../../../assets';
 
+import { messageReadIcon } from '../../../assets';
 import template from '../template/chat-message.hbs?raw';
-console.log(messageReadIcon);
 type ChatMessageImg = {
     src: string;
     time: string;

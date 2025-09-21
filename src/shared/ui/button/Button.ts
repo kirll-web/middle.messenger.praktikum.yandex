@@ -1,4 +1,5 @@
 import { insertToObject } from '@shared/utils';
+
 import { Block } from '../../utils/Block';
 import template from './button.hbs?raw';
 

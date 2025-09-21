@@ -1,0 +1,9 @@
+@use "@shared/styles" as *;
+
+.chat {
+    &__page {
+        display: flex;
+        inline-size: 100%;
+        block-size: 100vh;
+    }
+}

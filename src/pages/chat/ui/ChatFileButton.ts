@@ -1,5 +1,6 @@
 import { PopupMenu, PopupMenuButton } from '@shared/ui';
 import { Block } from '@shared/utils';
+
 import template from '../template/chat-file-button.hbs?raw';
 import { ChatFileIcon } from './ChatFileIcon';
 import { ChatLocationIcon } from './ChatLocationIcon';

@@ -1,4 +1,5 @@
 import { Block } from '@shared/utils';
+
 import template from '../template/chat-profile-menu-button.hbs?raw';
 import { ChatProfileMenuButtonIcon } from './ChatProfileMenuButtonIcon';
 

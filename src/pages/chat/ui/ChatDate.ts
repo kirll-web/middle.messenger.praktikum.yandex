@@ -1,4 +1,5 @@
 import { Block } from '@shared/utils';
+
 import template from '../template/chat-date.hbs?raw';
 
 export type ChatDateProps = {

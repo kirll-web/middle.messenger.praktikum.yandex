@@ -1,4 +1,5 @@
 import { v1 as createId } from 'uuid';
+
 import { searchIconSrc } from '../../../assets';
 import { Block } from '../../utils';
 import template from './search.hbs?raw';
@@ -50,7 +51,6 @@ export class Search extends Block {
     }
 
     override render() {
-        // console.log(template);
         return template;
     }
 }

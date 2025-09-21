@@ -67,7 +67,7 @@
         }
 
         &_owner {
-            align-self: flex-end;
+            margin-inline-start: auto;
 
             .message {
                 &__time {

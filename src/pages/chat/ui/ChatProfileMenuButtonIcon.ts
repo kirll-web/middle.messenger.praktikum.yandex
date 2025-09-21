@@ -1,4 +1,5 @@
 import { Block } from '@shared/utils';
+
 import templateAdd from '../template/chat-profile-menu-button-icon-add.hbs?raw';
 import templateRemove from '../template/chat-profile-menu-button-icon-remove.hbs?raw';
 

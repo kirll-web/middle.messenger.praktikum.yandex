@@ -2,14 +2,14 @@
 @use "@shared/ui/avatar/avatar";
 @use "@shared/ui/button/button";
 @use "@shared/ui/form/form";
-@use "@shared/ui/input/input";
+@use "@shared/ui/FormInput/FormInput";
 @use "@shared/ui/popup-menu/PopupMenu";
 @use "@shared/ui/nav/navbar";
-@use "@shared/ui/profile/profile-field";
+@use "@shared/ui/profile/ProfileField";
 @use "@shared/ui/search/search";
-@use "@pages/chats-list/ui/ChatItem";
-@use "@pages/chats-list/ui/ChatItemMessage";
-@use "@pages/chats-list/ui/ChatItemCounter";
+@use "@pages/chat/ui/ChatItem";
+@use "@pages/chat/ui/ChatItemMessage";
+@use "@pages/chat/ui/ChatItemCounter";
 @use "@pages/chat/ui/ChatDate";
 @use "@pages/chat/ui/ChatMessage";
 @use "@pages/chat/ui/Chat";
@@ -18,6 +18,8 @@
 @use "@pages/chat/ui/ChatSendButton";
 @use "@pages/chat/ui/ChatInput";
 @use "@pages/chat/ui/ChatFileButton";
+@use "@pages/chat/ui/ChatPage";
+@use "@pages/chat/ui/ChatsList";
 
 .app,
 .container {

@@ -1,4 +1,5 @@
 import { Block } from '@shared/utils';
+
 import { insertToObject } from './../../utils/insertToObject';
 import template from './PopupMenu.hbs?raw';
 import { PopupMenuButton } from './PopupMenuButton';

@@ -1,4 +1,5 @@
 import { Block } from '@shared/utils';
+
 import { AbstractSvgIcon } from '../svg-icon/AbstractSvgIcon';
 import template from './PopupMenuButton.hbs?raw';
 

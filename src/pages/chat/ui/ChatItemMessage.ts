@@ -1,4 +1,5 @@
 import { Block } from '@shared/utils';
+
 import template from '../template/chat-item-message.hbs?raw';
 
 export type ChatItemMessageProps = {

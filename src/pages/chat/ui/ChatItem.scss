@@ -8,6 +8,12 @@
     min-inline-size: calc($module * 36.2);
     padding-block: calc($module * 1.5);
 
+    border-block-end: 1px solid $separator;
+
+    &:last-child {
+        border-block-end: none;
+    }
+
     &__avatar {
         inline-size: calc($module * 5.8);
         block-size: calc($module * 5.8);

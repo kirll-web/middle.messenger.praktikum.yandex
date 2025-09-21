@@ -11,14 +11,6 @@
     &__buttons {
         inline-size: 100%;
         margin-block-start: calc($module * 7.5);
-
-        > * {
-            border-block-end: solid 1px $separator;
-
-            &:last-child {
-                border-block-end: none;
-            }
-        }
     }
 
     &__buttons {
@@ -28,8 +20,15 @@
     }
 
     &__button {
+        display: block;
+
+        inline-size: 100%;
         padding: calc($module * 1.25) 0;
+
         border-radius: 0;
+
+        color: $primary-color;
+        font-size: calc($module * 1.7);
         text-align: start;
 
         &_save {
@@ -39,6 +38,10 @@
             &_password {
                 margin-block-start: calc($module * 20.25);
             }
+        }
+
+        &_danger {
+            color: $danger;
         }
     }
 
