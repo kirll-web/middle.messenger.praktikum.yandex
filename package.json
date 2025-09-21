@@ -11,7 +11,9 @@
         "lint:fix": "eslint . --ext .ts,.tsx --fix",
         "dev": "vite --config ./config/vite.config.js",
         "start": "tsc && vite build --config ./config/vite.config.js && vite preview --port 3000 --config ./config/vite.config.js",
-        "preview": "vite preview --config ./config/vite.config.js"
+        "preview": "vite preview --config ./config/vite.config.js",
+        "stylelint": "stylelint \"**/*.{css,scss}\" --config ./stylelint/.stylelintrc.js",
+        "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix --config ./stylelint/.stylelintrc.js"
     },
     "devDependencies": {
         "@eslint/js": "^9.34.0",
