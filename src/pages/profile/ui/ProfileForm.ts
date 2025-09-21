@@ -85,7 +85,7 @@ export class ProfileForm extends Block<Props> {
             value: 'pochta@yandex.ru',
             error: 'Неправильная почта',
             onValidate: (value: string) => {
-                return Validator.validateEmail(value.trim());
+                return Validator.validateEmail(value);
             }
         },
         {
@@ -96,7 +96,7 @@ export class ProfileForm extends Block<Props> {
             value: 'ivanivanov',
             error: 'Неправильный логин',
             onValidate: (value: string) => {
-                return Validator.validateLogin(value.trim());
+                return Validator.validateLogin(value);
             }
         },
         {
@@ -107,7 +107,7 @@ export class ProfileForm extends Block<Props> {
             value: 'Иван',
             error: 'Неправильное имя',
             onValidate: (value: string) => {
-                return Validator.validateName(value.trim());
+                return Validator.validateName(value);
             }
         },
         {
@@ -118,7 +118,7 @@ export class ProfileForm extends Block<Props> {
             value: 'Иванов',
             error: 'Неправильная фамилия',
             onValidate: (value: string) => {
-                return Validator.validateName(value.trim());
+                return Validator.validateName(value);
             }
         },
         {
@@ -129,7 +129,7 @@ export class ProfileForm extends Block<Props> {
             value: 'Кастыбый',
             error: 'Неправильное имя в чате',
             onValidate: (value: string) => {
-                return Validator.validateName(value.trim());
+                return Validator.validateName(value);
             }
         },
         {
@@ -140,7 +140,7 @@ export class ProfileForm extends Block<Props> {
             value: '+7 (909) 967 30 30',
             error: 'Неправильный телефон',
             onValidate: (value: string) => {
-                return Validator.validatePhone(value.trim());
+                return Validator.validatePhone(value);
             }
         }
     ];
@@ -152,7 +152,7 @@ export class ProfileForm extends Block<Props> {
             name: 'oldPassword',
             error: 'Неправильный старый пароль',
             onValidate: (value: string) => {
-                return Validator.equalsPassword(this.oldPassword, value.trim());
+                return Validator.equalsPassword(this.oldPassword, value);
             }
         },
         {
@@ -162,7 +162,7 @@ export class ProfileForm extends Block<Props> {
             name: 'newPassword',
             error: 'Новый пароль не соответствует правилам пароля',
             onValidate: (value: string) => {
-                return Validator.validatePassword(value.trim());
+                return Validator.validatePassword(value);
             }
         },
         {
@@ -173,7 +173,7 @@ export class ProfileForm extends Block<Props> {
             value: '+7 (909) 967 30 30',
             error: 'Неправильный номер телефона',
             onValidate: (value: string) => {
-                return Validator.validatePhone(value.trim());
+                return Validator.validatePhone(value);
             }
         }
     ];
@@ -243,9 +243,15 @@ export class ProfileForm extends Block<Props> {
             events: {
                 submit: (event: SubmitEvent) => {
                     event.preventDefault();
-                    this.inputs.forEach((input) => {
-                        input.isValid();
-                    });
+                    const valid = this.inputs
+                        .map((input) => input.isValid())
+                        .some((inputValid) => inputValid === false);
+
+                    if (!valid) {
+                        return;
+                    }
+
+                    console.log(2);
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
                     const values = Object.fromEntries(formData.entries());

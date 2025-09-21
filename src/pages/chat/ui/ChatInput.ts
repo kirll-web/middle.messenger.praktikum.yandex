@@ -24,7 +24,7 @@ export class ChatInput extends Block {
     };
 
     private validate = (value: string): boolean => {
-        const valid = Validator.required(value);
+        const valid = Validator.validateMessage(value);
         if (valid) {
             this.setProps({ error: undefined });
             return true;

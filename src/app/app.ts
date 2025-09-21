@@ -1,12 +1,12 @@
 import Handlebars from 'handlebars';
 
 import { ProfilePage } from '@pages/profile';
+import { RoutePath } from '@shared/lib';
 import { Link } from '@shared/ui/link';
 import { render } from '@shared/utils/renderDom';
 
 import { AuthPage, ChatPage, ErrorPage, RegistrationPage } from '../pages';
 import { Navbar } from '../shared/ui';
-import { RoutePath } from './consts';
 
 Handlebars.registerHelper('eq', function (a, b) {
     return a === b;
@@ -78,7 +78,7 @@ class App {
         this.navbar = navbar;
 
         this.state = {
-            currentPage: RoutePath.Auth
+            currentPage: RoutePath.EditProfile
         };
         const appElement = document.getElementById('app') as HTMLDivElement;
         if (!appElement) {
@@ -113,12 +113,12 @@ class App {
         switch (this.state.currentPage) {
             case RoutePath.Auth: {
                 this.appElement.replaceChildren();
-                render('#app', new AuthPage({ Navbar: this.navbar }));
+                render('#app', new AuthPage({ Navbar: this.navbar, navigate: this.navigate }));
                 break;
             }
             case RoutePath.Registration: {
                 this.appElement.replaceChildren();
-                render('#app', new RegistrationPage({ Navbar: this.navbar }));
+                render('#app', new RegistrationPage({ Navbar: this.navbar, navigate: this.navigate }));
                 break;
             }
 

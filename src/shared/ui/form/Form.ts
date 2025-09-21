@@ -2,6 +2,7 @@ import { Block } from '@shared/utils';
 
 import { Button } from '../button/Button';
 import { FormInput } from '../FormInput/FormInput';
+import { Link } from '../link';
 import { insertToObject } from './../../utils/insertToObject';
 import template from './form.hbs?raw';
 
@@ -9,7 +10,7 @@ export type FormProps = {
     title: string;
     className?: string;
     inputs: FormInput[];
-    buttons: Button[];
+    buttons: (Button | Link)[];
     onSubmit(event: SubmitEvent): void;
 };
 

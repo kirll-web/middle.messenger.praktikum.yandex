@@ -62,7 +62,7 @@ export class HTTPTransport {
             const xhr = new XMLHttpRequest();
             const newURl =
                 method === METHODS.GET && data && typeof data === 'object'
-                    ? url + queryStringify(data as Record<string, unknown>)
+                    ? url + encodeURIComponent(queryStringify(data as Record<string, unknown>))
                     : url;
 
             xhr.open(method, newURl);

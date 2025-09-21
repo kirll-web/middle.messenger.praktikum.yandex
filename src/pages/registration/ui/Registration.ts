@@ -1,12 +1,14 @@
-import { Validator } from '@shared/lib';
-import { Button, FormInput, Navbar } from '@shared/ui';
+import { RoutePath, Validator } from '@shared/lib';
+import { Button, FormInput, Link, Navbar } from '@shared/ui';
 import { Form } from '@shared/ui/form/Form';
 import { Block } from '@shared/utils';
 
 import template from '../template/registration.hbs?raw';
+
 import './Registration.scss';
 
 export type RegistrationPageProps = {
+    navigate: (route: RoutePath) => void;
     Navbar: Navbar;
 };
 
@@ -14,7 +16,7 @@ export class RegistrationPage extends Block {
     inputs: FormInput[];
     password: string = '';
 
-    constructor({ Navbar }: RegistrationPageProps) {
+    constructor({ Navbar, navigate }: RegistrationPageProps) {
         const inputs = [
             new FormInput({
                 id: 'email',
@@ -22,7 +24,7 @@ export class RegistrationPage extends Block {
                 label: 'Почта',
                 name: 'email',
                 error: 'Неверная почта',
-                onValidate: (value: string) => Validator.required(value.trim())
+                onValidate: (value: string) => Validator.validateEmail(value)
             }),
             new FormInput({
                 id: 'login',
@@ -30,7 +32,7 @@ export class RegistrationPage extends Block {
                 label: 'Логин',
                 name: 'login',
                 error: 'Неправильный логин',
-                onValidate: (value: string) => Validator.validateLogin(value.trim())
+                onValidate: (value: string) => Validator.validateLogin(value)
             }),
             new FormInput({
                 id: 'first_name',
@@ -38,7 +40,7 @@ export class RegistrationPage extends Block {
                 label: 'Имя',
                 name: 'first_name',
                 error: 'Неправильное имя',
-                onValidate: (value: string) => Validator.validateName(value.trim())
+                onValidate: (value: string) => Validator.validateName(value)
             }),
             new FormInput({
                 id: 'second_name',
@@ -46,7 +48,7 @@ export class RegistrationPage extends Block {
                 label: 'Фамилия',
                 name: 'second_name',
                 error: 'Неправильная фамилия',
-                onValidate: (value: string) => Validator.validateName(value.trim())
+                onValidate: (value: string) => Validator.validateName(value)
             }),
             new FormInput({
                 id: 'phone',
@@ -54,7 +56,7 @@ export class RegistrationPage extends Block {
                 label: 'Телефон',
                 name: 'phone',
                 error: 'Неверный телефон',
-                onValidate: (value: string) => Validator.validatePhone(value.trim())
+                onValidate: (value: string) => Validator.validatePhone(value)
             }),
             new FormInput({
                 id: 'password',
@@ -62,7 +64,7 @@ export class RegistrationPage extends Block {
                 label: 'Пароль',
                 name: 'password',
                 error: 'Неправильный пароль',
-                onValidate: (value: string) => Validator.validatePassword(value.trim()),
+                onValidate: (value: string) => Validator.validatePassword(value),
                 onChange: (event) => {
                     const input = event.target as HTMLInputElement;
                     this.password = input.value;
@@ -74,7 +76,7 @@ export class RegistrationPage extends Block {
                 label: 'Пароль (ещё раз)',
                 name: 'repeatPassword',
                 error: 'Пароли не совпадают',
-                onValidate: (value: string) => Validator.equalsPassword(value.trim(), this.password)
+                onValidate: (value: string) => Validator.equalsPassword(value, this.password)
             })
         ];
 
@@ -85,18 +87,19 @@ export class RegistrationPage extends Block {
                 className: 'form-button_registration form-button',
                 type: 'submit'
             }),
-            new Button({
-                id: 'loginBtn',
+            new Link({
+                id: 'authLink',
                 text: 'Войти',
-                light: true,
-                className: 'form-button_light',
-                type: 'submit'
+                className: 'form-link',
+                onClick: () => {
+                    navigate(RoutePath.Auth);
+                }
             })
         ];
 
         const initProps: {
             Form: Form;
-        } & RegistrationPageProps = {
+        } & Omit<RegistrationPageProps, 'navigate'> = {
             Form: new Form({
                 title: 'Регистрация',
                 className: 'form_registration',
@@ -104,9 +107,13 @@ export class RegistrationPage extends Block {
                 buttons,
                 onSubmit: (event: SubmitEvent) => {
                     event.preventDefault();
-                    this.inputs.forEach((input) => {
-                        input.isValid();
-                    });
+                    const valid = this.inputs
+                        .map((input) => input.isValid())
+                        .some((inputValid) => inputValid === false);
+
+                    if (!valid) {
+                        return;
+                    }
                     const isFormValid = inputs.every((input) => input.isValid());
                     if (!isFormValid) return;
 

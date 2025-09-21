@@ -1,27 +1,27 @@
-import { Validator } from '@shared/lib';
-import { Button, FormInput, Navbar } from '@shared/ui';
-import { Form } from '@shared/ui/form/Form';
+import { RoutePath, Validator } from '@shared/lib';
+import { Button, Form, FormInput, Link, Navbar } from '@shared/ui';
 import { Block } from '@shared/utils';
 
 import template from '../template/auth.hbs?raw';
 
 export type AuthPageProps = {
+    navigate: (route: RoutePath) => void;
     Navbar: Navbar;
 };
 
 export class AuthPage extends Block {
     inputs: FormInput[];
 
-    constructor({ Navbar }: AuthPageProps) {
+    constructor({ Navbar, navigate }: AuthPageProps) {
         const inputs: FormInput[] = [
             new FormInput({
                 id: 'login',
-                type: 'email',
+                type: 'text',
                 label: 'Логин',
                 name: 'login',
                 error: 'Неправильный логин',
                 onValidate: (value: string) => {
-                    return Validator.required(value.trim());
+                    return Validator.validateLogin(value.trim());
                 }
             }),
 
@@ -32,31 +32,37 @@ export class AuthPage extends Block {
                 name: 'password',
                 error: 'Неправильный пароль',
                 onValidate: (value: string) => {
-                    return Validator.required(value.trim());
+                    return Validator.validatePassword(value.trim());
                 }
             })
         ];
         const initProps: {
             Form: Form;
-        } & AuthPageProps = {
+        } & Omit<AuthPageProps, 'navigate'> = {
             Form: new Form({
                 title: 'Вход',
                 className: 'form_auth',
                 inputs,
                 buttons: [
                     new Button({ id: 'loginBtn', text: 'Войти', className: 'form-button', type: 'submit' }),
-                    new Button({
-                        id: 'registrationBtn',
+                    new Link({
+                        id: 'registrationLink',
                         text: 'Зарегистрироваться',
-                        className: 'button_light form-button_light form-button_registration',
-                        type: 'submit'
+                        className: 'form-link',
+                        onClick: () => {
+                            navigate(RoutePath.Registration);
+                        }
                     })
                 ],
                 onSubmit: (event: SubmitEvent) => {
                     event.preventDefault();
-                    this.inputs.forEach((input) => {
-                        input.isValid();
-                    });
+                    const valid = this.inputs
+                        .map((input) => input.isValid())
+                        .some((inputValid) => inputValid === false);
+                    console.log(valid);
+                    if (!valid) {
+                        return;
+                    }
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
 

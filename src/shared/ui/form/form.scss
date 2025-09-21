@@ -29,4 +29,21 @@
             margin-block-start: calc($module * 2);
         }
     }
+
+    &-link {
+        display: inline-block;
+
+        inline-size: calc($module * 35);
+        inline-size: 100%;
+        margin-block-start: calc($module * 2);
+        padding: 0 $module;
+
+        background-color: transparent;
+
+        color: $primary-color;
+        font-size: 13px;
+        text-align: center;
+
+        cursor: pointer;
+    }
 }

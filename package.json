@@ -10,6 +10,8 @@
         "lint": "eslint . --ext .ts,.tsx",
         "lint:fix": "eslint . --ext .ts,.tsx --fix",
         "dev": "vite --config ./config/vite.config.js",
+        "stylelint": "stylelint \"**/*.{css,scss}\" --config ./stylelint/.stylelintrc.js",
+        "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix --config ./stylelint/.stylelintrc.js"
         "start": "tsc && vite build --config ./config/vite.config.js",
         "build": "tsc && vite build --config ./config/vite.config.js",
         "preview": "vite preview --config ./config/vite.config.js"
