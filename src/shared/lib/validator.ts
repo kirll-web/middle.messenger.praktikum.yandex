@@ -1,5 +1,5 @@
 export class Validator {
-    static nameRegex = /^(?:[A-ZА-Я][a-zа-я]+(?:-[A-ZА-Я][a-zа-я]+)*)$/;
+    static nameRegex = /^(?:[A-ZА-ЯЁ][a-zа-яё]+(?:-[A-ZА-ЯЁ][a-zа-яё]+)*)$/;
 
     static minLength(value: string, length: number): boolean {
         return value.length > length;
@@ -17,26 +17,24 @@ export class Validator {
         return this.nameRegex.test(name);
     }
 
-    // login
     static validateLogin(login: string): boolean {
-        // От 3 до 20 символов, латиница, цифры допустимы, но не все цифры,
-        // допускается "-" и "_", без пробелов
+        //от 3 до 20 символов, латиница, может содержать цифры, но не состоять из них,
+        // без пробелов, без спецсимволов (допустимы дефис и нижнее подчёркивание)
         const regex = /^(?!\d+$)[a-zA-Z0-9_-]{3,20}$/;
         return regex.test(login);
     }
 
-    // email
     static validateEmail(email: string): boolean {
         // Латиница, цифры, "-", "_", обязательно @, точка после,
         // перед точкой обязательно буквы
-        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
+        const regex =
+            /^(([^<>()[\]\\.,;:\s@*"]+(\.[^<>()[\]\\.,;:\s@*"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return regex.test(email);
     }
 
-    // password
     static validatePassword(password: string): boolean {
         // От 8 до 40 символов, хотя бы одна заглавная и одна цифра
-        const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/;
+        const regex = /^(?=.*[A-Z])(?=.*\d).{8,40}$/;
         return regex.test(password);
     }
 
@@ -44,7 +42,10 @@ export class Validator {
         return firstPassword === secondPassword;
     }
 
-    // phone
+    static validateMessage(value: string): boolean {
+        return this.required(value);
+    }
+
     static validatePhone(phone: string): boolean {
         // От 10 до 15 символов, только цифры, может начинаться с +
         const regex = /^\+?\d{10,15}$/;

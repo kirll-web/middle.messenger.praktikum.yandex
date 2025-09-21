@@ -55,9 +55,11 @@ export class FormInput extends Block<Omit<FormInputProps, 'id' | 'type' | 'name'
     private validate = (value: string): boolean => {
         const valid = this.props.onValidate(value);
         if (valid) {
+            console.log('valid', this.value);
             this.setProps({ error: undefined });
             return true;
         }
+        console.log('not valid', this.value);
         this.setProps({ error: this.inputError });
         return false;
     };
