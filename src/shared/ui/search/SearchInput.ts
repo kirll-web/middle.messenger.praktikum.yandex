@@ -1,5 +1,5 @@
 import { Block } from '../../utils';
-import template from './search-input.hbs?raw';
+import template from './SearchInput.hbs?raw';
 
 export type SearchInputProps = {
     inputId: string;

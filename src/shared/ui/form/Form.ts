@@ -3,7 +3,7 @@ import { Block } from '@shared/utils';
 import { Button } from '../button/Button';
 import { FormInput } from '../FormInput/FormInput';
 import { insertToObject } from './../../utils/insertToObject';
-import template from './Form.hbs?raw';
+import template from './form.hbs?raw';
 
 export type FormProps = {
     title: string;

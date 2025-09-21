@@ -6,11 +6,7 @@ export default defineConfig({
     root: resolve(__dirname, '../src'),
     server: { port: 3000 },
 
-    plugins: [
-        handlebars({
-            partialDirectory: resolve(__dirname, '../src/partials')
-        })
-    ],
+    plugins: [handlebars()],
     build: {
         outDir: resolve(__dirname, '../dist'),
         rollupOptions: {

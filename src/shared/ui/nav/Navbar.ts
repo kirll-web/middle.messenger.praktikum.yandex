@@ -1,7 +1,7 @@
 import { Block } from '@shared/utils';
 
 import { Link } from '../link';
-import template from './navbarBlock.hbs?raw';
+import template from './Navbar.hbs?raw';
 
 export type NavbarLink = {
     text: string;
