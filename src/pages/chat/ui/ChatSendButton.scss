@@ -1,0 +1,20 @@
+@use "@shared/styles" as *;
+
+.chat {
+    &__send-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        inline-size: calc($module * 3.5);
+        block-size: calc($module * 3.5);
+
+        background-color: $primary-color;
+        border-radius: 50%;
+
+        &-icon {
+            inline-size: calc($module * 1.25);
+            block-size: calc($module * 1.25);
+        }
+    }
+}

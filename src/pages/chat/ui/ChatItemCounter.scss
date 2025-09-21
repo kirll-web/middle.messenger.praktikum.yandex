@@ -1,0 +1,17 @@
+@use "@shared/styles" as *;
+
+.chat-item__counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    inline-size: calc($module * 2.5);
+    block-size: calc($module * 2.5);
+    margin-block-start: calc($module * 1.75);
+
+    background-color: $primary-color;
+    border-radius: 50%;
+
+    color: $secondary-color-text;
+    font-size: calc($module * 1.375);
+}

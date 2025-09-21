@@ -1,0 +1,59 @@
+@use "@shared/styles" as *;
+
+.chat {
+    &__profile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        inline-size: 100%;
+        padding: calc($module * 1.25) 0;
+
+        border-block-end: $separator 2px solid;
+
+        &-user {
+            display: flex;
+            align-items: center;
+        }
+
+        &-button {
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+            gap: calc($module * 0.5);
+
+            padding: calc($module * 0.5) calc($module * 1.5);
+
+            background-color: $color-profile-button-menu;
+            border-radius: calc($module * 3.5);
+
+            cursor: pointer;
+        }
+
+        &-dot {
+            display: block;
+
+            min-inline-size: calc($module * 0.375);
+            min-block-size: calc($module * 0.375);
+
+            background-color: $primary-color;
+            border-radius: 50%;
+        }
+    }
+
+    &__menu {
+        inset-block-start: calc($module * 7);
+        inset-inline-end: $module;
+
+        &-button {
+            display: flex;
+            gap: $module;
+            align-items: center;
+        }
+
+        &_hidden {
+            display: none;
+        }
+    }
+}

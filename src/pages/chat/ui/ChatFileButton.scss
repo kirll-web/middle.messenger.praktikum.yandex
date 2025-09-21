@@ -1,0 +1,19 @@
+@use "@shared/styles" as *;
+
+.chat {
+    &__file-button {
+        position: relative;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        inline-size: calc($module * 4);
+        block-size: calc($module * 4);
+    }
+
+    &__file-menu {
+        inset-block-end: calc($module * 5);
+        inset-inline-start: 0;
+    }
+}

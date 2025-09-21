@@ -1,0 +1,26 @@
+@use "@shared/styles" as *;
+
+.popup-menu {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    gap: calc($module * 2);
+
+    min-inline-size: calc($module * 31.25);
+    padding: calc($module * 1.875);
+
+    background-color: $secondary-bg;
+    border-radius: calc($module * 1.5);
+    box-shadow: 0 0 6px rgba(#000, 14%);
+
+    &__button {
+        display: flex;
+        gap: $module;
+        align-items: center;
+    }
+
+    &_hidden {
+        display: none;
+    }
+}

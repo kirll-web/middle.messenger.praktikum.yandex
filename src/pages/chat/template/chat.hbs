@@ -1,4 +1,9 @@
-<main class="main">
-    <div>Заглушка ленты переписки</div>
-    {{> Navbar }}
-</main>
+<div class='chat'>
+    {{#unless items}}
+        <div class='chat__placeholder'>Выберите чат чтобы отправить сообщение</div>
+    {{/unless}}
+    {{#if items}}
+        {{{items}}}
+    {{/if}}
+    {{{Navbar}}}
+</div>

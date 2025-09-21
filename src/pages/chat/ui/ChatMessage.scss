@@ -1,0 +1,83 @@
+@use "@shared/styles" as *;
+
+.chat {
+    .message {
+        position: relative;
+
+        display: flex;
+        align-self: flex-start;
+
+        max-inline-size: calc($module * 52.5);
+        margin-block-end: calc($module * 3.75);
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        .message__time {
+            position: relative;
+            float: inline-end;
+
+            display: flex;
+            gap: calc($module * 0.5);
+            align-items: center;
+
+            margin-block-start: 8px;
+            margin-inline-start: $module;
+
+            font-size: calc($module * 1.2);
+
+            &_img {
+                position: absolute;
+                inset-block-end: $module;
+                inset-inline-end: $module;
+
+                padding: calc($module * 0.2) calc($module * 0.95);
+
+                background-color: rgba(#525252, 0.5);
+                border-radius: calc($module * 4);
+
+                color: $secondary-color-text;
+            }
+        }
+
+        &__text {
+            unicode-bidi: plaintext;
+
+            position: relative;
+
+            display: block;
+
+            padding: calc($module * 1.4);
+
+            background-color: $message-bg-secondary;
+            border-radius: 0.25rem;
+
+            line-height: 1.3125;
+            text-align: initial;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        &__state {
+            color: $color-hint;
+
+            &_read {
+                color: $primary-color;
+            }
+        }
+
+        &_owner {
+            align-self: flex-end;
+
+            .message {
+                &__time {
+                    color: $primary-color;
+
+                    &_img {
+                        color: $secondary-color-text;
+                    }
+                }
+            }
+        }
+    }
+}

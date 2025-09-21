@@ -1,0 +1,10 @@
+@use "@shared/styles" as *;
+
+.chat {
+    display: flex;
+    flex-direction: column;
+
+    inline-size: 100%;
+    padding: calc($module * 1.25);
+    padding: calc($module * 2.5);
+}

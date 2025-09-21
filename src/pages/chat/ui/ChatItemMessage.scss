@@ -1,0 +1,7 @@
+@use "@shared/styles" as *;
+
+.chat-item__message {
+    margin-block-start: calc($module * 0.5);
+    color: $color-hint;
+    font-size: calc($module * 1.5);
+}

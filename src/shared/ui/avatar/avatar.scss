@@ -1,7 +1,9 @@
+@use "@shared/styles" as *;
+
 .avatar {
     inline-size: calc($module * 16.25);
     block-size: calc($module * 16.25);
-    background-color: $avatar-bg;
+    background-color: $gray-bg;
     border-radius: 50%;
 
     &__img {

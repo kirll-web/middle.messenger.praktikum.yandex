@@ -1,0 +1,8 @@
+@use "@shared/styles" as *;
+
+.chat {
+    &__form {
+        display: flex;
+        align-items: center;
+    }
+}

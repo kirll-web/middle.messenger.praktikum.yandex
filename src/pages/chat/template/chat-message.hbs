@@ -1,0 +1,18 @@
+{{#if messageImg}}
+    <div class='message{{#if owner}} message_owner{{/if}}'>
+        <img class='message__img' src="{{messageImg.src}}"/>
+        <span class='message__time message__time_img'>{{#if owner}}<svg class="message__state{{#if read}} message__state_read{{/if}}" width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line y1="-0.5" x2="3.765" y2="-0.5" transform="matrix(0.705933 0.708278 -0.705933 0.708278 0.700195 2.33313)" stroke="currentColor"/>
+                        <line y1="-0.5" x2="5.6475" y2="-0.5" transform="matrix(0.705933 -0.708278 0.705933 0.708278 3.35828 5)" stroke="currentColor"/>
+                        <line y1="-0.5" x2="5.6475" y2="-0.5" transform="matrix(0.705933 -0.708278 0.705933 0.708278 6.01587 5)" stroke="currentColor"/>
+        </svg>{{/if}}<span>{{messageImg.time}}</span></span></p>
+    </div>
+{{else}}
+    <div class='message{{#if owner}} message_owner{{/if}}'>
+        <p class='message__text'>{{messageText.text}}<span class='message__time'>{{#if owner}}<svg class="message__state{{#if read}} message__state_read{{/if}}" width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line y1="-0.5" x2="3.765" y2="-0.5" transform="matrix(0.705933 0.708278 -0.705933 0.708278 0.700195 2.33313)" stroke="currentColor"/>
+                        <line y1="-0.5" x2="5.6475" y2="-0.5" transform="matrix(0.705933 -0.708278 0.705933 0.708278 3.35828 5)" stroke="currentColor"/>
+                        <line y1="-0.5" x2="5.6475" y2="-0.5" transform="matrix(0.705933 -0.708278 0.705933 0.708278 6.01587 5)" stroke="currentColor"/>
+        </svg>{{/if}}<span>{{messageText.time}}</span></span></p>
+    </div>
+{{/if}}

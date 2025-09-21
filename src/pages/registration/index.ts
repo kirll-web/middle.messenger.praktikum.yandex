@@ -1,1 +1,1 @@
-export { registrationRender } from './ui/Registration';
+export { RegistrationPage } from './ui/Registration';

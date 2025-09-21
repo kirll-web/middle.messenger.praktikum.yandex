@@ -1,16 +1,9 @@
+import { ProfilePage } from '@pages/profile';
+import { Link } from '@shared/ui/link';
+import { render } from '@shared/utils/renderDom';
 import Handlebars from 'handlebars';
-import {
-    authRender,
-    chatRender,
-    chatsListRender,
-    error404Render,
-    error500Render,
-    profileChangePasswordRender,
-    profileEditRender,
-    profileRender,
-    registrationRender
-} from '../pages';
-import { registrComponents } from '../shared/ui';
+import { AuthPage, ChatListPage, ChatPage, ErrorPage, RegistrationPage } from '../pages';
+import { Navbar, registrComponents } from '../shared/ui';
 import { RoutePath } from './consts';
 
 Handlebars.registerHelper('eq', function (a, b) {
@@ -26,10 +19,81 @@ class App {
 
     appElement: HTMLDivElement;
 
+    navbar: Navbar;
+
     constructor() {
         registrComponents();
+        const navbar = new Navbar({
+            links: [
+                {
+                    text: 'Вход',
+                    href: '#login',
+                    onClick: () => {
+                        console.log('this.navbar onclick');
+                        this.state.currentPage = RoutePath.Auth;
+                        this.render();
+                    }
+                },
+                {
+                    text: 'Регистрация',
+                    href: '#registration',
+                    onClick: () => {
+                        console.log('this.navbar onclick');
+                        this.state.currentPage = RoutePath.Registration;
+                        this.render();
+                    }
+                },
+                {
+                    text: 'Профиль',
+                    href: '#profile',
+                    onClick: () => {
+                        console.log('this.navbar onclick');
+                        this.state.currentPage = RoutePath.Profile;
+                        this.render();
+                    }
+                },
+                {
+                    text: 'Редактировать профиль',
+                    href: '#editProfile',
+                    onClick: () => {
+                        console.log('this.navbar onclick');
+                        this.state.currentPage = RoutePath.EditProfile;
+                        this.render();
+                    }
+                },
+                {
+                    text: 'Редактировать пароль',
+                    href: '#changePassword',
+                    onClick: () => {
+                        console.log('this.navbar onclick');
+                        this.state.currentPage = RoutePath.ChangePassword;
+                        this.render();
+                    }
+                },
+                {
+                    text: 'Список чатов',
+                    href: '#chatLists',
+                    onClick: () => {
+                        console.log('this.navbar onclick');
+                        this.state.currentPage = RoutePath.ChatsList;
+                        this.render();
+                    }
+                },
+                {
+                    text: 'Чат',
+                    href: '#chat',
+                    onClick: () => {
+                        console.log('this.navbar onclick');
+                        this.state.currentPage = RoutePath.Chat;
+                        this.render();
+                    }
+                }
+            ]
+        });
+        this.navbar = navbar;
+
         this.state = {
-            currentPage: RoutePath.Auth,
+            currentPage: RoutePath.Chat,
             questions: [],
             answers: []
         };
@@ -50,9 +114,7 @@ class App {
         if (target.classList.contains('navbar__link')) {
             event.preventDefault();
             const href = target.getAttribute('href')?.substring(1);
-            console.log(href);
             if (href && Object.values(RoutePath).includes(href as RoutePath)) {
-                console.log(href);
                 this.state.currentPage = href as RoutePath;
                 this.render();
             }
@@ -67,44 +129,107 @@ class App {
     render() {
         switch (this.state.currentPage) {
             case RoutePath.Auth: {
-                this.renderPage(authRender);
+                this.appElement.replaceChildren();
+                render('#app', new AuthPage({ Navbar: this.navbar }));
                 break;
             }
             case RoutePath.Registration: {
-                this.renderPage(registrationRender);
+                this.appElement.replaceChildren();
+                render('#app', new RegistrationPage({ Navbar: this.navbar }));
                 break;
             }
 
             case RoutePath.Error500: {
-                this.renderPage(error500Render);
+                this.appElement.replaceChildren();
+                render(
+                    '#app',
+                    new ErrorPage({
+                        title: '500',
+                        description: 'Не туда попали',
+                        LinkBack: new Link({
+                            text: 'Назад к чатам',
+                            className: '',
+                            href: '#'
+                        }),
+                        Navbar: this.navbar
+                    })
+                );
                 break;
             }
 
             case RoutePath.Profile: {
-                this.renderPage(profileRender);
+                this.appElement.replaceChildren();
+
+                render(
+                    '#app',
+                    new ProfilePage({
+                        type: 'view',
+                        Navbar: this.navbar
+                    })
+                );
+
                 break;
             }
 
             case RoutePath.EditProfile: {
-                this.renderPage(profileEditRender);
+                this.appElement.replaceChildren();
+
+                render(
+                    '#app',
+                    new ProfilePage({
+                        type: 'edit',
+                        Navbar: this.navbar
+                    })
+                );
+
                 break;
             }
 
             case RoutePath.ChangePassword: {
-                this.renderPage(profileChangePasswordRender);
+                this.appElement.replaceChildren();
+
+                render(
+                    '#app',
+                    new ProfilePage({
+                        type: 'changePassword',
+                        Navbar: this.navbar
+                    })
+                );
                 break;
             }
             case RoutePath.Chat: {
-                this.renderPage(chatRender);
+                this.appElement.replaceChildren();
+
+                render('#app', new ChatPage({}));
                 break;
             }
             case RoutePath.ChatsList: {
-                this.renderPage(chatsListRender);
+                this.appElement.replaceChildren();
+
+                render(
+                    '#app',
+                    new ChatListPage({
+                        Navbar: this.navbar
+                    })
+                );
                 break;
             }
 
             default: {
-                this.renderPage(error404Render);
+                this.appElement.replaceChildren();
+                render(
+                    '#app',
+                    new ErrorPage({
+                        title: '404',
+                        description: 'Не туда попали',
+                        LinkBack: new Link({
+                            text: 'Назад к чатам',
+                            className: '',
+                            href: '#'
+                        }),
+                        Navbar: this.navbar
+                    })
+                );
             }
         }
     }

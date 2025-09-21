@@ -1,1 +1,1 @@
-export { error404Render, error500Render } from './ui/Error';
+export { ErrorPage } from './ui/Error';
