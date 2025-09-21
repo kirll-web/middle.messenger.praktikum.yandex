@@ -6,7 +6,6 @@
         "module": "ESNext",
         "skipLibCheck": true,
 
-        /* Bundler mode */
         "moduleResolution": "bundler",
         "allowImportingTsExtensions": true,
         "isolatedModules": true,
@@ -15,7 +14,6 @@
         "noEmit": true,
         "jsx": "react-jsx",
 
-        /* Linting */
         "allowJs": true,
         "strict": true,
         "noUnusedLocals": true,
@@ -24,7 +22,6 @@
         "noUncheckedSideEffectImports": true,
         "noImplicitReturns": true,
 
-        /* Paths */
         "baseUrl": "./src",
         "paths": {
             "@app/*": ["app/*"],
@@ -36,8 +33,5 @@
             "@styles/*": ["styles/*"]
         }
     },
-    "include": [
-        "src/**/*",
-        ".types/global.d.ts" // убедитесь, что файл включен
-    ]
+    "include": ["src/**/*", ".types/global.d.ts"]
 }
