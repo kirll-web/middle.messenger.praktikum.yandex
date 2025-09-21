@@ -5,7 +5,7 @@
         "lib": ["DOM", "DOM.Iterable", "ES2022"],
         "module": "ESNext",
         "skipLibCheck": true,
-
+        "noImplicitAny": true,
         "moduleResolution": "bundler",
         "allowImportingTsExtensions": true,
         "isolatedModules": true,
