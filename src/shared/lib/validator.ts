@@ -1,6 +1,4 @@
 export class Validator {
-    static nameRegex = /^(?:[A-ZА-ЯЁ][a-zа-яё]+(?:-[A-ZА-ЯЁ][a-zа-яё]+)*)$/;
-
     static minLength(value: string, length: number): boolean {
         return value.length > length;
     }
@@ -14,7 +12,8 @@ export class Validator {
     }
 
     static validateName(name: string): boolean {
-        return this.nameRegex.test(name);
+        const regex = /^(?:[A-ZА-ЯЁ][a-zа-яё]+(?:-[A-ZА-ЯЁ][a-zа-яё]+)*)$/;
+        return regex.test(name);
     }
 
     static validateLogin(login: string): boolean {
