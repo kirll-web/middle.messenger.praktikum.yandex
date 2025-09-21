@@ -207,7 +207,7 @@ export class ProfileForm extends Block<Props> {
                 availableTypes: availableTypes
             }),
             name: 'Иван Иванов',
-            fields: inputs,
+            fields: [],
             buttons: [
                 new Link({
                     id: 'changeProfileData',

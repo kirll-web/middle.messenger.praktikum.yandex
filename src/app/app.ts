@@ -78,7 +78,7 @@ class App {
         this.navbar = navbar;
 
         this.state = {
-            currentPage: RoutePath.Profile
+            currentPage: RoutePath.Auth
         };
         const appElement = document.getElementById('app') as HTMLDivElement;
         if (!appElement) {
