@@ -241,7 +241,7 @@ export class ProfileForm extends Block<Props> {
         this.setProps({
             ...initProps,
             events: {
-                submit: (event: SubmitEvent) => {
+                submit: (event: SubmitEvent ) => {
                     event.preventDefault();
                     this.inputs.forEach((input) => {
                         input.isValid();

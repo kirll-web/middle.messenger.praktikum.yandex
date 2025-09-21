@@ -3,18 +3,20 @@ import { v1 as createId } from 'uuid';
 
 import { EventBus, EventCallback } from './EventBus';
 
-interface PropsEvents {
-    [key: string]: (...args: unknown[]) => unknown;
-}
-type Meta = {
-    props: Record<string, unknown>;
+type DomEvents = {
+    [K in keyof HTMLElementEventMap]?: (event: HTMLElementEventMap[K]) => void;
 };
+
 export type BaseProps = {
-    events?: PropsEvents;
+    events?: DomEvents;
     settings?: {
         withId?: boolean;
     };
     attr?: Record<string, string>;
+};
+
+type Meta = {
+    props: Record<string, unknown>;
 };
 
 type Props = {
@@ -68,28 +70,36 @@ export class Block<P extends Props = Props> {
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    //private
     private _addEvents() {
-        if (!this.props.events) {
+        if (!this.props.events || !this._element) {
             return;
         }
 
-        const events: PropsEvents = this.props.events;
-        Object.keys(events).forEach((eventName) => {
-            this._element?.addEventListener(eventName, events[eventName]);
-        });
+        const events: DomEvents = this.props.events;
+
+        for (const key in events) {
+            const k = key as keyof DomEvents;
+            const handler = events[k];
+            if (handler) {
+                this._element.addEventListener(k, handler as EventListener);
+            }
+        }
     }
 
     private _removeEvents() {
-        if (!this.props.events) {
+        if (!this.props.events || !this._element) {
             return;
         }
 
-        const events: PropsEvents = this.props.events;
+        const events: DomEvents = this.props.events;
 
-        Object.keys(events).forEach((eventName) => {
-            this._element?.removeEventListener(eventName, events[eventName]);
-        });
+        for (const key in events) {
+            const k = key as keyof DomEvents;
+            const handler = events[k];
+            if (handler) {
+                this._element.removeEventListener(k, handler as EventListener);
+            }
+        }
     }
 
     protected addAttributes(): void {
@@ -155,7 +165,8 @@ export class Block<P extends Props = Props> {
         }
 
         for (const key in newProps.events) {
-            if (newProps.events?.[key] !== oldProps.events?.[key]) {
+            const k = key as keyof DomEvents;
+            if (newProps.events?.[k] !== oldProps.events?.[k]) {
                 return true;
             }
         }
