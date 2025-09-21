@@ -207,7 +207,7 @@ export class ProfileForm extends Block<Props> {
                 availableTypes: availableTypes
             }),
             name: 'Иван Иванов',
-            fields: [],
+            fields: inputs,
             buttons: [
                 new Link({
                     id: 'changeProfileData',
@@ -241,7 +241,7 @@ export class ProfileForm extends Block<Props> {
         this.setProps({
             ...initProps,
             events: {
-                submit: (event: SubmitEvent ) => {
+                submit: (event: SubmitEvent) => {
                     event.preventDefault();
                     this.inputs.forEach((input) => {
                         input.isValid();
