@@ -1,0 +1,64 @@
+@use "@shared/styles" as *;
+
+.chat-item {
+    display: flex;
+    align-items: start;
+
+    inline-size: 100%;
+    min-inline-size: calc($module * 36.2);
+    padding-block: calc($module * 1.5);
+
+    border-block-end: 1px solid $separator;
+
+    &:last-child {
+        border-block-end: none;
+    }
+
+    &__avatar {
+        inline-size: calc($module * 5.8);
+        block-size: calc($module * 5.8);
+        margin-inline-end: calc($module * 1.25);
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+
+        inline-size: 100%;
+        max-inline-size: calc($module * 24.1);
+        margin-inline-end: calc($module * 1.9);
+    }
+
+    &__name {
+        font-size: calc($module * 1.625);
+        font-weight: 600;
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__time {
+        color: $color-hint;
+        font-size: calc($module * 1.125);
+    }
+
+    &__counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        inline-size: calc($module * 2.5);
+        block-size: calc($module * 2.5);
+        margin-block-start: calc($module * 1.75);
+
+        background-color: $primary-color;
+        border-radius: 50%;
+
+        color: $secondary-color-text;
+        font-size: calc($module * 1.375);
+    }
+}

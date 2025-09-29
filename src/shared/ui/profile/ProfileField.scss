@@ -1,0 +1,26 @@
+@use "@shared/styles" as *;
+
+.profile {
+    &-field {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        inline-size: 100%;
+
+        font-size: calc($module * 1.63);
+
+        border-block-end: solid 1px $separator;
+
+        &__input {
+            padding-block: calc($module * 1.25);
+            color: $color-hint;
+            text-align: end;
+        }
+
+        &__error {
+            color: $danger;
+            font-size: calc($module * 1.5);
+        }
+    }
+}

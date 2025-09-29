@@ -1,0 +1,27 @@
+@use "@shared/styles" as *;
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    inline-size: 100%;
+    block-size: 100%;
+    padding: 0 calc($module * 2.5);
+
+    .messages {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    &__placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        inline-size: 100%;
+        block-size: 100%;
+
+        color: $color-hint;
+    }
+}

@@ -7,9 +7,13 @@
         "node": ">=18.0.0"
     },
     "scripts": {
+        "lint": "eslint . --ext .ts,.tsx",
+        "lint:fix": "eslint . --ext .ts,.tsx --fix",
         "dev": "vite --config ./config/vite.config.js",
         "start": "tsc && vite build --config ./config/vite.config.js && vite preview --port 3000 --config ./config/vite.config.js",
-        "preview": "vite preview --config ./config/vite.config.js"
+        "preview": "vite preview --config ./config/vite.config.js",
+        "stylelint": "stylelint \"**/*.{css,scss}\" --config ./stylelint/.stylelintrc.js",
+        "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix --config ./stylelint/.stylelintrc.js"
     },
     "devDependencies": {
         "@eslint/js": "^9.34.0",
@@ -22,6 +26,7 @@
         "globals": "^16.3.0",
         "prettier": "^3.6.2",
         "sass": "^1.90.0",
+        "stylelint": "^16.5.0",
         "stylelint-config-css-modules": "^4.5.1",
         "stylelint-config-standard-scss": "^15.0.1",
         "stylelint-order": "^7.0.0",
@@ -31,6 +36,7 @@
         "vite": "^7.1.2"
     },
     "dependencies": {
+        "uuid": "12.0.0",
         "vite-plugin-handlebars": "^2.0.0"
     }
 }

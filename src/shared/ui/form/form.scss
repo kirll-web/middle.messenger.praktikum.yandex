@@ -1,3 +1,5 @@
+@use "@shared/styles" as *;
+
 .form {
     inline-size: 100%;
     max-inline-size: calc($module * 42.5);
@@ -22,13 +24,26 @@
     &-button {
         margin-block-start: calc($module * 17.875);
 
-        &_registration {
-            margin-block-start: calc($module * 6);
-        }
-
         &_light {
             inline-size: calc($module * 35);
             margin-block-start: calc($module * 2);
         }
+    }
+
+    &-link {
+        display: inline-block;
+
+        inline-size: calc($module * 35);
+        inline-size: 100%;
+        margin-block-start: calc($module * 2);
+        padding: 0 $module;
+
+        background-color: transparent;
+
+        color: $primary-color;
+        font-size: 13px;
+        text-align: center;
+
+        cursor: pointer;
     }
 }

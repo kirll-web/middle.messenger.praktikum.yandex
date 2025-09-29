@@ -1,1 +1,1 @@
-export { chatRender } from './ui/Chat';
+export { ChatPage } from './ui/ChatPage';

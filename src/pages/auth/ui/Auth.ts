@@ -1,19 +1,84 @@
-import Handlebars from 'handlebars';
-import AuthTemplate from '../template/auth.hbs?raw';
+import { RoutePath, Validator } from '@shared/lib';
+import { Button, Form, FormInput, Link, Navbar } from '@shared/ui';
+import { Block } from '@shared/utils';
 
-export const authRender = () =>
-    Handlebars.compile(AuthTemplate)({
-        inputs: [
-            { id: 'login', type: 'email', label: 'Логин', name: 'login' },
-            { id: 'password', type: 'password', label: 'Пароль', name: 'password' }
-        ],
-        buttons: [
-            { id: 'loginBtn', text: 'Войти', className: 'form-button', type: 'submit' },
-            {
-                id: 'registrationBtn',
-                text: 'Зарегистрироваться',
-                className: 'button_light form-button_light form-button_registration',
-                type: 'submit'
-            }
-        ]
-    });
+import template from '../template/auth.hbs?raw';
+
+export type AuthPageProps = {
+    navigate: (route: RoutePath) => void;
+    Navbar: Navbar;
+};
+
+export class AuthPage extends Block {
+    inputs: FormInput[];
+
+    constructor({ Navbar, navigate }: AuthPageProps) {
+        const inputs: FormInput[] = [
+            new FormInput({
+                id: 'login',
+                type: 'text',
+                label: 'Логин',
+                name: 'login',
+                error: 'Неправильный логин',
+                onValidate: (value: string) => {
+                    return Validator.validateLogin(value.trim());
+                }
+            }),
+
+            new FormInput({
+                id: 'password',
+                type: 'password',
+                label: 'Пароль',
+                name: 'password',
+                error: 'Неправильный пароль',
+                onValidate: (value: string) => {
+                    return Validator.validatePassword(value.trim());
+                }
+            })
+        ];
+        const initProps: {
+            Form: Form;
+        } & Omit<AuthPageProps, 'navigate'> = {
+            Form: new Form({
+                title: 'Вход',
+                className: 'form_auth',
+                inputs,
+                buttons: [
+                    new Button({ id: 'loginBtn', text: 'Войти', className: 'form-button', type: 'submit' }),
+                    new Link({
+                        id: 'registrationLink',
+                        text: 'Зарегистрироваться',
+                        className: 'form-link',
+                        onClick: () => {
+                            navigate(RoutePath.Registration);
+                        }
+                    })
+                ],
+                onSubmit: (event: SubmitEvent) => {
+                    event.preventDefault();
+                    const valid = this.inputs
+                        .map((input) => input.isValid())
+                        .some((inputValid) => inputValid === false);
+
+                    if (!valid) {
+                        return;
+                    }
+
+                    const form = event.target as HTMLFormElement;
+                    const formData = new FormData(form);
+
+                    const values = Object.fromEntries(formData.entries());
+
+                    console.log(values);
+                }
+            }),
+            Navbar
+        };
+        super(initProps);
+        this.inputs = inputs;
+    }
+
+    override render(): string {
+        return template;
+    }
+}

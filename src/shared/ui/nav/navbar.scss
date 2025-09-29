@@ -1,9 +1,11 @@
-.navbar {
-    &__list {
-        position: absolute;
-        inset-block-start: calc($module * 2);
-        inset-inline-start: 50%;
+@use "@shared/styles" as *;
 
+.navbar {
+    position: absolute;
+    inset-block-start: calc($module * 2);
+    inset-inline-start: 50%;
+
+    &__list {
         display: flex;
         flex-wrap: wrap;
         gap: calc($module * 2);

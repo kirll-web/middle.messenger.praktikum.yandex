@@ -1,0 +1,22 @@
+@use "@shared/styles" as *;
+
+.chat {
+    &__list {
+        padding: 0 calc($module * 1.25);
+        background-color: $third-bg-color;
+    }
+
+    &__profile-link {
+        display: inline-block;
+
+        inline-size: 100%;
+        margin: calc($module * 1.25) 0;
+        padding: calc($module * 1.25) 0;
+
+        color: $color-hint;
+        font-size: calc($module * 1.5);
+        text-align: end;
+
+        cursor: pointer;
+    }
+}

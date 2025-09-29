@@ -1,0 +1,13 @@
+@use "@shared/styles" as *;
+
+.chat__date {
+    display: block;
+
+    inline-size: 100%;
+    margin-block-end: calc($module * 3.75);
+    padding-block: $module;
+
+    color: $color-hint;
+    font-size: calc($module * 1.5);
+    text-align: center;
+}

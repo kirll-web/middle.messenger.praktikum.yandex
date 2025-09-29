@@ -18,6 +18,14 @@
             "options": {
                 "singleQuote": false
             }
+        },
+        {
+            "files": "*.hbs",
+            "options": {
+                "singleQuote": true,
+                "endOfLine": "auto",
+                "tabWidth": 4
+            }
         }
     ]
 }

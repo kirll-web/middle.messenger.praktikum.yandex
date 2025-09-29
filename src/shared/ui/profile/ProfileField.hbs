@@ -1,0 +1,12 @@
+<div class="profile-field__wrapper">
+    <div class='profile-field {{#if error}} profile-field_error {{/if}} {{className}}'>
+    <label for="{{id}}" class='profile-field__label'>{{label}}</label>
+        <div className="profile-input__wrapper">
+            {{{Input}}}
+            
+        </div>
+    </div>
+    {{#if error}}
+        <span class='profile-field__error'>{{error}}<span>
+    {{/if}}
+</div>

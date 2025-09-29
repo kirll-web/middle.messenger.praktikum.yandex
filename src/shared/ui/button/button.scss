@@ -1,3 +1,5 @@
+@use "@shared/styles" as *;
+
 .button {
     inline-size: 100%;
     padding: calc($module * 1.5);
@@ -15,7 +17,5 @@
         font-size: 13px;
     }
 
-    &_danger {
-        color: $danger;
-    }
+
 }

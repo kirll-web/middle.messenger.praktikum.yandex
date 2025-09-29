@@ -1,0 +1,26 @@
+@use "@shared/styles" as *;
+
+.search {
+    display: flex;
+
+    inline-size: 100%;
+    padding: $module;
+
+    background-color: $gray-bg;
+    border-radius: calc($module * 0.625);
+
+    &__input {
+        &_hidden {
+            display: none;
+        }
+    }
+
+    &__placeholder {
+        margin: 0 auto;
+        color: $color-hint;
+
+        &_hidden {
+            display: none;
+        }
+    }
+}

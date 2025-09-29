@@ -6,11 +6,7 @@ export default defineConfig({
     root: resolve(__dirname, '../src'),
     server: { port: 3000 },
 
-    plugins: [
-        handlebars({
-            partialDirectory: resolve(__dirname, '../src/partials')
-        })
-    ],
+    plugins: [handlebars()],
     build: {
         outDir: resolve(__dirname, '../dist'),
         rollupOptions: {
@@ -21,8 +17,10 @@ export default defineConfig({
         alias: {
             '@': resolve(__dirname, '../src'),
             '@styles': resolve(__dirname, '../src/styles'),
+            '@app': resolve(__dirname, '../src/app'),
             '@assets': resolve(__dirname, '../src/assets'),
-            '@shared': resolve(__dirname, '../src/shared')
+            '@shared': resolve(__dirname, '../src/shared'),
+            '@pages': resolve(__dirname, '../src/pages')
         }
     },
     assetsInclude: ['**/*.hbs'],
