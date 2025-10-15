@@ -10,4 +10,4 @@ export const tryLogout = async (): Promise<boolean> => {
     }
 
     return false;
-}; \n
+};
