@@ -6,7 +6,7 @@ import { EventBus, EventCallback } from './EventBus';
 type DomEvents = {
     [K in keyof HTMLElementEventMap]?: (event: HTMLElementEventMap[K]) => void;
 };
-
+export type BlockConstructor<P extends Props = Props, T extends Block<P> = Block<P>> = new (props: P) => T;
 export type BaseProps = {
     events?: DomEvents;
     settings?: {
@@ -19,11 +19,9 @@ type Meta = {
     props: Record<string, unknown>;
 };
 
-type Props = {
+export type Props = BaseProps & {
     [key: string]: unknown;
-} & BaseProps;
-
-type WithId<P extends Props> = Omit<P, '_id'> & { _id: string };
+};
 
 export class Block<P extends Props = Props> {
     static EVENTS = {
@@ -37,7 +35,7 @@ export class Block<P extends Props = Props> {
     _meta: Meta;
     protected _id: string = createId();
     readonly id = this._id;
-    props: WithId<P>;
+    props: P;
     eventBus: () => EventBus;
     children: Record<string, Block>;
     lists: Record<string, unknown[]>;
@@ -48,7 +46,7 @@ export class Block<P extends Props = Props> {
      *
      * @returns {void}
      */
-    constructor(propsBlock: Omit<P & BaseProps, '_id'> = {} as Omit<P & BaseProps, '_id'>) {
+    constructor(propsBlock: P = {} as P) {
         const eventBus = new EventBus();
         const { children, props, lists } = this._getInitProps(propsBlock);
 
@@ -57,11 +55,8 @@ export class Block<P extends Props = Props> {
         this._meta = {
             props
         };
-        const propsWithId: WithId<P> = {
-            ...(props as Omit<P, '_id'>),
-            _id: this._id
-        };
-        this.props = this._makeProxy(propsWithId);
+
+        this.props = this._makeProxy(props as P);
         this.lists = this._makeProxy({ ...lists });
 
         this.eventBus = () => eventBus;
@@ -131,6 +126,9 @@ export class Block<P extends Props = Props> {
     private _componentDidMount() {
         this.componentDidMount();
         Object.values(this.children).forEach((child) => {
+            if (!child) {
+                return;
+            }
             child.dispatchComponentDidMount();
         });
     }
@@ -146,7 +144,7 @@ export class Block<P extends Props = Props> {
         if (!response) {
             return;
         }
-        this._render();
+        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
     protected componentDidUpdate(oldProps: P, newProps: P): boolean {
@@ -174,7 +172,7 @@ export class Block<P extends Props = Props> {
         return false;
     }
 
-    public setProps = (nextProps: Partial<P & BaseProps>) => {
+    public setProps = (nextProps: Partial<P & Props>) => {
         if (!nextProps) {
             return;
         }
@@ -202,7 +200,7 @@ export class Block<P extends Props = Props> {
         const tmpId = Math.floor(100000 + Math.random() * 900000);
 
         Object.entries(this.children).forEach(([key, child]) => {
-            propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+            propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
         });
 
         Object.entries(this.lists).forEach(([key]) => {
@@ -213,7 +211,10 @@ export class Block<P extends Props = Props> {
         fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
         Object.values(this.children).forEach((child) => {
-            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+            if (!child) {
+                return;
+            }
+            const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
             if (stub) {
                 stub.replaceWith(child.getContent());
             }
@@ -250,7 +251,7 @@ export class Block<P extends Props = Props> {
 
     public getContent() {
         if (!this._element) {
-            throw new Error('Element is not created');
+            return document.createElement('div');
         }
         return this._element;
     }
@@ -277,9 +278,9 @@ export class Block<P extends Props = Props> {
         return document.createElement(tagName) as HTMLTemplateElement;
     }
 
-    private _getInitProps(propsAndChildren: BaseProps): {
+    private _getInitProps(propsAndChildren: Partial<P>): {
         children: Record<string, Block>;
-        props: BaseProps;
+        props: BaseProps & Record<string, unknown>;
         lists: Record<string, unknown[]>;
     } {
         const children: Record<string, Block> = {};
@@ -295,6 +296,7 @@ export class Block<P extends Props = Props> {
                 props[key] = value;
             }
         });
+
         return { children, props, lists };
     }
 
@@ -302,13 +304,16 @@ export class Block<P extends Props = Props> {
         const propsAndStubs: Record<string, unknown> = { ...props };
 
         Object.entries(this.children).forEach(([key, child]) => {
-            propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+            propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
         });
 
         const fragment = this._createDocumentElement('template');
         fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
 
         Object.values(this.children).forEach((child) => {
+            if (!child) {
+                return;
+            }
             const stub = fragment.content.querySelector(`[data-id="${child.id || 1}"]`);
             if (stub === null) {
                 throw new Error('Stub not created');
@@ -319,17 +324,32 @@ export class Block<P extends Props = Props> {
         return fragment.content;
     }
 
-    public show() {
-        const content = this.getContent();
-        if (content) {
-            content.style.display = 'block';
-        }
-    }
+    public show() {}
 
-    public hide() {
-        const content = this.getContent();
-        if (content) {
-            content.style.display = 'none';
+    public hide() {}
+
+    public updateList(name: string, newItems: Block[]) {
+        const container = this._element?.querySelector(`[data-list="${name}"]`);
+        if (!container) return;
+
+        const oldItems = (this.lists[name] as Block[]) || [];
+        const wasAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 10;
+        oldItems.forEach((item) => {
+            if (!newItems.find((n) => n.id === item.id)) {
+                item.getContent().remove();
+            }
+        });
+
+        newItems.forEach((item) => {
+            const exists = oldItems.find((o) => o.id === item.id);
+            if (!exists) {
+                container.append(item.getContent());
+            }
+        });
+
+        this.lists[name] = newItems;
+        if (wasAtBottom) {
+            container.scrollTop = container.scrollHeight;
         }
     }
 }

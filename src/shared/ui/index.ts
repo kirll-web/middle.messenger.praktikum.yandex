@@ -4,7 +4,6 @@ export { Form } from './form/Form';
 export { FormInput } from './FormInput/FormInput';
 export { Input } from './input/Input';
 export { Link } from './link';
-export { Navbar } from './nav/Navbar';
 export { PopupMenu } from './popup-menu/PopupMenu';
 export { PopupMenuButton } from './popup-menu/PopupMenuButton';
 export { ProfileField } from './profile/ProfileField';

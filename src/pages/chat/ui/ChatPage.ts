@@ -1,27 +1,43 @@
-import { Navbar } from '@shared/ui';
+import { userStore } from '@entities/user';
+import { Modal } from '@shared/ui/Modal';
 import { Block } from '@shared/utils';
 
 import template from '../template/chat-page.hbs?raw';
 import { Chat, ChatProps } from './Chat';
+import { getInitModal } from './ChatProfileButton';
+import { ChatStub } from './ChatStub';
 import { ChatList } from './ChatsList';
 
-export type ChatPageProps = {
-    Navbar: Navbar;
+type Props = {
+    ChatList: ChatList;
 };
 
 export class ChatPage extends Block {
-    constructor({ Navbar }: ChatPageProps) {
+    constructor() {
         super({
-            Chat: new Chat({}),
+            Chat: new ChatStub(),
+            Modal: new Modal(getInitModal())
+        });
+
+        const user = userStore.getState();
+
+        if (!user) {
+            return;
+        }
+
+        const initProps: Props = {
             ChatList: new ChatList({
                 OnOpenChat: (chatProps: ChatProps) => {
                     this.openChat(chatProps);
                 }
-            }),
-            Navbar
+            })
+        };
+
+        this.setProps({
+            ...initProps
         });
 
-        this.setProps({});
+        console.warn(this.children.Modal.id);
     }
 
     private openChat(chatProps: ChatProps) {

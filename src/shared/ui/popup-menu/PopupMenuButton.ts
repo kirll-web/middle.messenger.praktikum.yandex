@@ -6,13 +6,17 @@ import template from './PopupMenuButton.hbs?raw';
 export type PopupMenuButtonProps = {
     Icon: AbstractSvgIcon;
     text: string;
+    onClick(): void;
 };
 
 export class PopupMenuButton extends Block {
-    constructor({ Icon, text }: PopupMenuButtonProps) {
+    constructor({ Icon, text, onClick }: PopupMenuButtonProps) {
         super({
             SvgIcon: Icon,
-            text
+            text,
+            events: {
+                click: onClick
+            }
         });
     }
 

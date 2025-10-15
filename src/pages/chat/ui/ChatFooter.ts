@@ -7,7 +7,7 @@ import { ChatSendButton } from './ChatSendButton';
 
 export class ChatFooter extends Block {
     chatInput: ChatInput;
-    constructor() {
+    constructor(onSendMessage: (value: string) => void) {
         const chatInput = new ChatInput();
         super({
             ChatFileButton: new ChatFileButton(),
@@ -22,11 +22,9 @@ export class ChatFooter extends Block {
                     }
 
                     const form = event.target as HTMLFormElement;
-                    const formData = new FormData(form);
 
-                    const values = Object.fromEntries(formData.entries());
-
-                    console.log(values);
+                    onSendMessage(chatInput.getValue());
+                    form.reset();
                 }
             }
         });

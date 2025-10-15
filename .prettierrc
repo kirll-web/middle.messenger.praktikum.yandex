@@ -5,6 +5,7 @@
     "trailingComma": "none",
     "endOfLine": "auto",
     "tabWidth": 4,
+    "insertFinalNewline": true,
     "overrides": [
         {
             "files": "*.md",

@@ -40,11 +40,18 @@
             background-color: $primary-color;
             border-radius: 50%;
         }
+
+        &-avatar {
+            inline-size: calc($module * 4.25);
+            block-size: calc($module * 4.25);
+            margin-inline-end: calc($module * 2);
+        }
     }
 
     &__menu {
         inset-block-start: calc($module * 7);
         inset-inline-end: $module;
+        z-index: 3;
 
         &-button {
             display: flex;

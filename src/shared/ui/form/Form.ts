@@ -9,7 +9,7 @@ import template from './form.hbs?raw';
 export type FormProps = {
     title: string;
     className?: string;
-    inputs: FormInput[];
+    inputs: (FormInput<string> | FormInput<File>)[];
     buttons: (Button | Link)[];
     onSubmit(event: SubmitEvent): void;
 };

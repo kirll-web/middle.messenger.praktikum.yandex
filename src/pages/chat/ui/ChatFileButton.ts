@@ -14,15 +14,18 @@ export class ChatFileButton extends Block {
             buttons: [
                 new PopupMenuButton({
                     Icon: new ChatPhotoIcon(),
-                    text: 'Фото или Видео'
+                    text: 'Фото или Видео',
+                    onClick: () => {}
                 }),
                 new PopupMenuButton({
                     Icon: new ChatFileIcon(),
-                    text: 'Файл'
+                    text: 'Файл',
+                    onClick: () => {}
                 }),
                 new PopupMenuButton({
                     Icon: new ChatLocationIcon(),
-                    text: 'Локация'
+                    text: 'Локация',
+                    onClick: () => {}
                 })
             ],
             className: 'chat__file-menu'
