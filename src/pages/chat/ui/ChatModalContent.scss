@@ -1,0 +1,18 @@
+@use "@shared/styles" as *;
+
+.chat {
+    &__modal {
+        &-content {
+            z-index: 31;
+        }
+
+        &-form {
+            padding: calc($module * 5) calc($module * 3.75);
+            background-color: $secondary-bg;
+        }
+
+        &-button {
+            margin-block-start: calc($module * 4);
+        }
+    }
+}

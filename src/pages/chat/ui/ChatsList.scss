@@ -19,4 +19,9 @@
 
         cursor: pointer;
     }
+
+    &__item-avatar {
+        inline-size: calc($module * 5.875);
+        block-size: calc($module * 5.875);
+    }
 }

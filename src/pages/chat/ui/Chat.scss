@@ -10,7 +10,9 @@
     padding: 0 calc($module * 2.5);
 
     .messages {
+        display: flex;
         flex: 1;
+        flex-direction: column;
         overflow-y: auto;
     }
 

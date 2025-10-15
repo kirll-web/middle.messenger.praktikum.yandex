@@ -1,7 +1,10 @@
+import { getUser } from '@entities/user';
 import { RoutePath, Validator } from '@shared/lib';
 import { Button, Form, FormInput, Link, Navbar } from '@shared/ui';
-import { Block } from '@shared/utils';
+import { Block, Router } from '@shared/utils';
 
+import { fetchAuthData } from '../api';
+import { AuthData } from '../model';
 import template from '../template/auth.hbs?raw';
 
 export type AuthPageProps = {
@@ -11,10 +14,16 @@ export type AuthPageProps = {
 
 export class AuthPage extends Block {
     inputs: FormInput[];
+    private router: Router;
 
-    constructor({ Navbar, navigate }: AuthPageProps) {
-        const inputs: FormInput[] = [
-            new FormInput({
+    constructor() {
+        getUser().then((data) => {
+            if (data) {
+                new Router().go(RoutePath.Chat);
+            }
+        });
+        const inputs: FormInput<string>[] = [
+            new FormInput<string>({
                 id: 'login',
                 type: 'text',
                 label: 'Логин',
@@ -25,7 +34,7 @@ export class AuthPage extends Block {
                 }
             }),
 
-            new FormInput({
+            new FormInput<string>({
                 id: 'password',
                 type: 'password',
                 label: 'Пароль',
@@ -38,7 +47,7 @@ export class AuthPage extends Block {
         ];
         const initProps: {
             Form: Form;
-        } & Omit<AuthPageProps, 'navigate'> = {
+        } = {
             Form: new Form({
                 title: 'Вход',
                 className: 'form_auth',
@@ -50,7 +59,7 @@ export class AuthPage extends Block {
                         text: 'Зарегистрироваться',
                         className: 'form-link',
                         onClick: () => {
-                            navigate(RoutePath.Registration);
+                            this.router.go(RoutePath.Registration);
                         }
                     })
                 ],
@@ -58,7 +67,7 @@ export class AuthPage extends Block {
                     event.preventDefault();
                     const valid = this.inputs
                         .map((input) => input.isValid())
-                        .some((inputValid) => inputValid === false);
+                        .every((inputValid) => inputValid === true);
 
                     if (!valid) {
                         return;
@@ -67,15 +76,17 @@ export class AuthPage extends Block {
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
 
-                    const values = Object.fromEntries(formData.entries());
+                    const values = Object.fromEntries(formData.entries()) as AuthData;
 
-                    console.log(values);
+                    fetchAuthData(values)
+                        .then(() => this.router.go(RoutePath.Chat))
+                        .catch((err) => console.log(err));
                 }
-            }),
-            Navbar
+            })
         };
         super(initProps);
         this.inputs = inputs;
+        this.router = new Router();
     }
 
     override render(): string {
