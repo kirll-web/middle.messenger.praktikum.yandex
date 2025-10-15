@@ -23,4 +23,4 @@ class UserStore extends Store<UserStoreState> {
     }
 }
 
-export default new UserStore();
+export const userStore = new UserStore();

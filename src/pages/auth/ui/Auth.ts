@@ -1,6 +1,6 @@
 import { getUser } from '@entities/user';
 import { RoutePath, Validator } from '@shared/lib';
-import { Button, Form, FormInput, Link, Navbar } from '@shared/ui';
+import { Button, Form, FormInput, Link } from '@shared/ui';
 import { Block, Router } from '@shared/utils';
 
 import { fetchAuthData } from '../api';
@@ -9,7 +9,6 @@ import template from '../template/auth.hbs?raw';
 
 export type AuthPageProps = {
     navigate: (route: RoutePath) => void;
-    Navbar: Navbar;
 };
 
 export class AuthPage extends Block {

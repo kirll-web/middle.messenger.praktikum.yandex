@@ -11,8 +11,8 @@ export type ErrorPageProps = {
 };
 
 export class ErrorPage extends Block {
-    constructor({ title, description, LinkBack, Navbar }: ErrorPageProps) {
-        super({ title, description, LinkBack, Navbar });
+    constructor({ title, description, LinkBack }: ErrorPageProps) {
+        super({ title, description, LinkBack });
     }
 
     override render() {

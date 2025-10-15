@@ -43,47 +43,8 @@ class App {
                     new Router().go(RoutePath.Chat);
                 }
             })
-            .catch(() => new Router().go(RoutePath.Auth)); 
+            .catch(() => new Router().go(RoutePath.Auth));
     }
-
-    // render() {
-    //     switch (this.state.currentPage) {
-    //         case RoutePath.Error500: {
-    //             this.appElement.replaceChildren();
-    //             render(
-    //                 '#app',
-    //                 new ErrorPage({
-    //                     title: '500',
-    //                     description: 'Не туда попали',
-    //                     LinkBack: new Link({
-    //                         text: 'Назад к чатам',
-    //                         className: '',
-    //                         href: '#'
-    //                     }),
-    //                     Navbar: this.navbar
-    //                 })
-    //             );
-    //             break;
-    //         }
-
-    //         default: {
-    //             this.appElement.replaceChildren();
-    //             render(
-    //                 '#app',
-    //                 new ErrorPage({
-    //                     title: '404',
-    //                     description: 'Не туда попали',
-    //                     LinkBack: new Link({
-    //                         text: 'Назад к чатам',
-    //                         className: '',
-    //                         href: '#'
-    //                     }),
-    //                     Navbar: this.navbar
-    //                 })
-    //             );
-    //         }
-    //     }
-    // }
 }
 
 export { App };
