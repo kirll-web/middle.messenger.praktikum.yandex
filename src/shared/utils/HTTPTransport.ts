@@ -104,7 +104,6 @@ export class HTTPTransport {
     };
 
     static delete = (url: string, options: Options = {}) => {
-        console.log('options', options);
         return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
     };
 
@@ -119,7 +118,6 @@ export class HTTPTransport {
         const { method, data, headers } = options;
         const headersContentType = options?.headers?.contentType ?? 'json';
         const jsonParse = options?.jsonParse;
-        console.log('headersjsonParse', options);
 
         return new Promise((resolve, reject) => {
             try {
