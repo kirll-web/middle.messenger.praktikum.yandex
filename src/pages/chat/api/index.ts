@@ -16,7 +16,7 @@ export const addUserToChatRequest = (userId: string, chatId: number) => {
 };
 
 export const deleteUserToChatRequest = (userId: string, chatId: number) => {
-    return HTTPTransport.delete(`${API_BASE_URL}/chats/users`, { data: { users: [userId], chatId } });
+    return HTTPTransport.delete(`${API_BASE_URL}/chats/users`, { data: { users: [userId], chatId }, jsonParse: false });
 };
 
 export const uploadAvatarRequest = (data: FormData) => {

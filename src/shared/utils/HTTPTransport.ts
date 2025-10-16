@@ -71,7 +71,12 @@ const buildApiResponseError = (response: XMLHttpRequest) => {
 
 const buildApiResponse = <T = unknown>(response: XMLHttpRequest, jsonParse: boolean = true): ApiResponse<T> => {
     if ([200, 201, 204].includes(response.status)) {
-        return buildApiResponseSuccess<T>(response, jsonParse);
+        try {
+            return buildApiResponseSuccess<T>(response, jsonParse);
+        } catch (e) {
+            console.error('JSON parse error', e);
+            return buildApiResponseError(response);
+        }
     } else {
         return buildApiResponseError(response);
     }
@@ -99,6 +104,7 @@ export class HTTPTransport {
     };
 
     static delete = (url: string, options: Options = {}) => {
+        console.log('options', options);
         return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
     };
 
@@ -113,55 +119,60 @@ export class HTTPTransport {
         const { method, data, headers } = options;
         const headersContentType = options?.headers?.contentType ?? 'json';
         const jsonParse = options?.jsonParse;
+        console.log('headersjsonParse', options);
 
         return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            const newURl =
-                method === METHODS.GET && data && typeof data === 'object'
-                    ? url + queryStringify(data as Record<string, unknown>)
-                    : url;
+            try {
+                const xhr = new XMLHttpRequest();
+                const newURl =
+                    method === METHODS.GET && data && typeof data === 'object'
+                        ? url + queryStringify(data as Record<string, unknown>)
+                        : url;
 
-            xhr.open(method, newURl);
+                xhr.open(method, newURl);
 
-            for (const key in headers) {
-                xhr.setRequestHeader(key, headers[key]);
-            }
-
-            if (headersContentType === 'json') {
-                xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-            }
-
-
-            xhr.onload = function () {
-                const response = buildApiResponse<T>(xhr, jsonParse);
-
-                if (isApiResponseError(response)) {
-                    reject(response);
-                    return;
+                for (const key in headers) {
+                    xhr.setRequestHeader(key, headers[key]);
                 }
-                resolve(response);
-            };
-            xhr.onabort = function () {
-                reject(buildApiResponse<T>(this, jsonParse));
-            };
-            xhr.onerror = function () {
-                reject(buildApiResponse<T>(this, jsonParse));
-            };
-            xhr.ontimeout = function () {
-                reject(buildApiResponse<T>(this, jsonParse));
-            };
-            xhr.withCredentials = true;
 
-            if (method === METHODS.GET || !data) {
-                xhr.send();
-            } else {
-                const body = headersContentType === 'json' ? JSON.stringify(data) : (data as XMLHttpRequestBodyInit);
-                xhr.send(body);
-            }
-            if (timeout) {
-                setTimeout(() => {
-                    xhr.abort();
-                });
+                if (headersContentType === 'json') {
+                    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+                }
+
+                xhr.onload = function () {
+                    const response = buildApiResponse<T>(xhr, jsonParse);
+
+                    if (isApiResponseError(response)) {
+                        reject(response);
+                        return;
+                    }
+                    resolve(response);
+                };
+                xhr.onabort = function () {
+                    reject(buildApiResponse<T>(this, jsonParse));
+                };
+                xhr.onerror = function () {
+                    reject(buildApiResponse<T>(this, jsonParse));
+                };
+                xhr.ontimeout = function () {
+                    reject(buildApiResponse<T>(this, jsonParse));
+                };
+                xhr.withCredentials = true;
+
+                if (method === METHODS.GET || !data) {
+                    xhr.send();
+                } else {
+                    const body =
+                        headersContentType === 'json' ? JSON.stringify(data) : (data as XMLHttpRequestBodyInit);
+                    xhr.send(body);
+                }
+                if (timeout) {
+                    setTimeout(() => {
+                        xhr.abort();
+                    });
+                }
+            } catch (e) {
+                console.error(e);
             }
         });
     };
