@@ -5,15 +5,15 @@
         position: relative;
 
         display: flex;
-        align-self: flex-start;
+        justify-content: flex-start;
 
-        max-inline-size: calc($module * 52.5);
+        inline-size: 100%;
         margin-block-end: calc($module * 3.75);
         overflow: hidden;
 
         text-overflow: ellipsis;
 
-        .message__time {
+        &__time {
             position: relative;
             float: inline-end;
 
@@ -67,7 +67,7 @@
         }
 
         &_owner {
-            margin-inline-start: auto;
+            justify-content: flex-end;
 
             .message {
                 &__time {
