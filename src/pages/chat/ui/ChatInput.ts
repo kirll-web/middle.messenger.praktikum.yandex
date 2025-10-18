@@ -19,6 +19,8 @@ export class ChatInput extends Block {
         });
     }
 
+    public getValue = () => this.value;
+
     public isValid = (): boolean => {
         return this.validate(this.value);
     };

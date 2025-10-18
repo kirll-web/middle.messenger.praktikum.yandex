@@ -20,7 +20,8 @@ export default defineConfig({
             '@app': resolve(__dirname, '../src/app'),
             '@assets': resolve(__dirname, '../src/assets'),
             '@shared': resolve(__dirname, '../src/shared'),
-            '@pages': resolve(__dirname, '../src/pages')
+            '@pages': resolve(__dirname, '../src/pages'),
+            "@entities": resolve(__dirname, '../src/entities'),
         }
     },
     assetsInclude: ['**/*.hbs'],

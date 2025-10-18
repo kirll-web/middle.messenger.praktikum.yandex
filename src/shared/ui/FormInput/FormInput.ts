@@ -2,7 +2,7 @@ import { Block } from '../../utils';
 import { Input } from '../input/Input';
 import template from './FormInput.hbs?raw';
 
-export type FormInputProps = {
+export type FormInputProps<T extends string | File = string> = {
     id: string;
     type: string;
     name: string;
@@ -11,18 +11,20 @@ export type FormInputProps = {
     error?: string;
     onBlur?: (event: FocusEvent) => void;
     onChange?: (event: Event) => void;
-    onValidate: (value: string) => boolean;
+    onValidate: (value: T) => boolean;
 };
 
 export type PrivateFormInputProps = {
     Input: Input;
 };
 
-export class FormInput extends Block<Omit<FormInputProps, 'id' | 'type' | 'name'> & PrivateFormInputProps> {
-    private value: string = '';
+export class FormInput<T extends string | File = string> extends Block<
+    Omit<FormInputProps<T>, 'id' | 'type' | 'name'> & PrivateFormInputProps
+> {
+    private value?: T;
     private inputError: string | undefined;
 
-    constructor({ id, type, name, label, className, error, onValidate, onChange }: FormInputProps) {
+    constructor({ id, type, name, label, className, error, onValidate, onChange }: FormInputProps<T>) {
         super({
             label,
             className: ` ${className}`,
@@ -35,12 +37,12 @@ export class FormInput extends Block<Omit<FormInputProps, 'id' | 'type' | 'name'
                 onBlur: (event) => {
                     const input = event.target as HTMLInputElement;
 
-                    this.validate(input.value);
+                    this.validate(input.value as T);
                 },
                 onChange: (event) => {
                     onChange?.(event);
                     const input = event.target as HTMLInputElement;
-                    this.value = input.value;
+                    this.value = input.value as T;
                 }
             })
         });
@@ -49,10 +51,10 @@ export class FormInput extends Block<Omit<FormInputProps, 'id' | 'type' | 'name'
     }
 
     public isValid = (): boolean => {
-        return this.validate(this.value);
+        return this.validate(this.value as T);
     };
 
-    private validate = (value: string): boolean => {
+    private validate = (value: T): boolean => {
         const valid = this.props.onValidate(value);
 
         if (valid) {

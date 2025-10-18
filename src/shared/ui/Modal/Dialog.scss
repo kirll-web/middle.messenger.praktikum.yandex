@@ -1,0 +1,8 @@
+@use "@shared/styles" as *;
+
+.dialog {
+    z-index: 31;
+    padding: calc($module * 5) calc($module * 3.75);
+    background-color: $secondary-bg;
+    border-radius: calc($module * 1.5);
+}

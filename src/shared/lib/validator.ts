@@ -1,3 +1,5 @@
+import { AvailableTypes } from './consts';
+
 export class Validator {
     static minLength(value: string, length: number): boolean {
         return value.length > length;
@@ -49,5 +51,13 @@ export class Validator {
         // От 10 до 15 символов, только цифры, может начинаться с +
         const regex = /^\+?\d{10,15}$/;
         return regex.test(phone);
+    }
+
+    static validateFile(file: File): boolean {
+        return (Object.values(AvailableTypes) as string[]).includes(file.type);
+    }
+
+    static validateId(value: string): boolean {
+        return !Number.isNaN(Number(value));
     }
 }

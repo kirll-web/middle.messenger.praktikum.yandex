@@ -1,22 +1,21 @@
+import { getUser } from '@entities/user';
 import { RoutePath, Validator } from '@shared/lib';
-import { Button, FormInput, Link, Navbar } from '@shared/ui';
+import { Button, FormInput, Link } from '@shared/ui';
 import { Form } from '@shared/ui/form/Form';
-import { Block } from '@shared/utils';
+import { Block, Router } from '@shared/utils';
 
+import { fetchRegistrationData } from '../api';
+import { RegistrationData } from '../model';
 import template from '../template/registration.hbs?raw';
 
 import './Registration.scss';
 
-export type RegistrationPageProps = {
-    navigate: (route: RoutePath) => void;
-    Navbar: Navbar;
-};
-
 export class RegistrationPage extends Block {
     inputs: FormInput[];
     password: string = '';
+    private router: Router;
 
-    constructor({ Navbar, navigate }: RegistrationPageProps) {
+    constructor() {
         const inputs = [
             new FormInput({
                 id: 'email',
@@ -92,14 +91,14 @@ export class RegistrationPage extends Block {
                 text: 'Войти',
                 className: 'form-link',
                 onClick: () => {
-                    navigate(RoutePath.Auth);
+                    this.router.go(RoutePath.Auth);
                 }
             })
         ];
 
         const initProps: {
             Form: Form;
-        } & Omit<RegistrationPageProps, 'navigate'> = {
+        } = {
             Form: new Form({
                 title: 'Регистрация',
                 className: 'form_registration',
@@ -107,28 +106,35 @@ export class RegistrationPage extends Block {
                 buttons,
                 onSubmit: (event: SubmitEvent) => {
                     event.preventDefault();
-                    const valid = this.inputs
-                        .map((input) => input.isValid())
-                        .some((inputValid) => inputValid === false);
 
-                    if (!valid) {
+                    const isFormValid = inputs.every((input) => input.isValid());
+                    if (!isFormValid) {
                         return;
                     }
-                    const isFormValid = inputs.every((input) => input.isValid());
-                    if (!isFormValid) return;
 
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
 
-                    const values = Object.fromEntries(formData.entries());
-                    console.log(values);
+                    const values = Object.fromEntries(formData.entries()) as RegistrationData;
+                    fetchRegistrationData({
+                        first_name: values.first_name,
+                        second_name: values.second_name,
+                        login: values.login,
+                        email: values.email,
+                        password: values.password,
+                        phone: values.phone
+                    })
+                        .then(() => getUser().then(() => new Router().go(RoutePath.Chat)))
+                        .catch((err) => {
+                            console.log(err);
+                        });
                 }
-            }),
-            Navbar
+            })
         };
 
         super(initProps);
         this.inputs = inputs;
+        this.router = new Router();
     }
 
     override render(): string {

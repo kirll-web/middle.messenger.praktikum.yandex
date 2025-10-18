@@ -15,8 +15,10 @@
     }
 
     &__avatar {
-        inline-size: calc($module * 5.8);
-        block-size: calc($module * 5.8);
+        min-inline-size: calc($module * 5.8);
+        max-inline-size: calc($module * 5.8);
+        min-block-size: calc($module * 5.8);
+        max-block-size: calc($module * 5.8);
         margin-inline-end: calc($module * 1.25);
     }
 

@@ -4,9 +4,11 @@
 @use "@shared/ui/form/form";
 @use "@shared/ui/FormInput/FormInput";
 @use "@shared/ui/popup-menu/PopupMenu";
-@use "@shared/ui/nav/navbar";
 @use "@shared/ui/profile/ProfileField";
 @use "@shared/ui/search/search";
+@use "@shared/ui/back/back";
+@use "@shared/ui/Modal/Dialog";
+@use "@shared/ui/Modal/Modal";
 @use "@pages/chat/ui/ChatItem";
 @use "@pages/chat/ui/ChatItemMessage";
 @use "@pages/chat/ui/ChatItemCounter";
@@ -20,6 +22,7 @@
 @use "@pages/chat/ui/ChatFileButton";
 @use "@pages/chat/ui/ChatPage";
 @use "@pages/chat/ui/ChatsList";
+@use "@pages/chat/ui/ChatModalContent";
 
 .app,
 .container {

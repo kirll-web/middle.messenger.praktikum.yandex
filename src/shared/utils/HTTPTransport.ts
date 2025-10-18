@@ -28,70 +28,150 @@ function queryStringify(data: Record<string, unknown>) {
             .join('&')
     );
 }
+export type ResponseType = 'json' | 'text' | 'formData';
 
 type Options = {
     data?: unknown;
     timeout?: number;
-    headers?: Record<string, string>;
+    headers?: Record<string, string> & {
+        contentType?: ResponseType;
+    };
+    jsonParse?: boolean;
 };
 
 type RequestOptions = Options & {
     method: METHODS;
 };
 
+type ApiResponseSuccess<T = unknown> = {
+    data: T;
+};
+
+type ApiResponseError = {
+    error: string;
+    code: number;
+};
+
+type ApiResponse<T = unknown> = ApiResponseSuccess<T> | ApiResponseError;
+
+const buildApiResponseSuccess = <T = unknown>(response: XMLHttpRequest, jsonParse: boolean): ApiResponse<T> => {
+    return {
+        data: jsonParse ? JSON.parse(response.response) : response.response
+    } as {
+        data: T;
+    };
+};
+
+const buildApiResponseError = (response: XMLHttpRequest) => {
+    return {
+        error: response.response,
+        code: response.status
+    };
+};
+
+const buildApiResponse = <T = unknown>(response: XMLHttpRequest, jsonParse: boolean = true): ApiResponse<T> => {
+    if ([200, 201, 204].includes(response.status)) {
+        try {
+            return buildApiResponseSuccess<T>(response, jsonParse);
+        } catch (e) {
+            console.error('JSON parse error', e);
+            return buildApiResponseError(response);
+        }
+    } else {
+        return buildApiResponseError(response);
+    }
+};
+
+export const isApiResponseSuccess = (response: ApiResponse): response is ApiResponseSuccess => {
+    return 'data' in response;
+};
+
+export const isApiResponseError = (response: ApiResponse): response is ApiResponseError => {
+    return 'error' in response && 'code' in response;
+};
+
 export class HTTPTransport {
-    get = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    static get = <T = undefined>(url: string, options: Options = {}) => {
+        return this.request<T>(url, { ...options, method: METHODS.GET }, options.timeout);
     };
 
-    post = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+    static post = <T = undefined>(url: string, options: Options = {}) => {
+        return this.request<T>(url, { ...options, method: METHODS.POST }, options.timeout);
     };
 
-    put = (url: string, options: Options = {}) => {
+    static put = (url: string, options: Options = {}) => {
         return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
     };
 
-    delete = (url: string, options: Options = {}) => {
+    static delete = (url: string, options: Options = {}) => {
         return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
     };
 
     // PUT, POST, DELETE
 
     // options:
-    request = (url: string, options: RequestOptions, timeout = 5000) => {
+    private static request = <T = unknown>(
+        url: string,
+        options: RequestOptions,
+        timeout?: number
+    ): Promise<ApiResponse<T>> => {
         const { method, data, headers } = options;
+        const headersContentType = options?.headers?.contentType ?? 'json';
+        const jsonParse = options?.jsonParse;
 
         return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            const newURl =
-                method === METHODS.GET && data && typeof data === 'object'
-                    ? url + queryStringify(data as Record<string, unknown>)
-                    : url;
+            try {
+                const xhr = new XMLHttpRequest();
+                const newURl =
+                    method === METHODS.GET && data && typeof data === 'object'
+                        ? url + queryStringify(data as Record<string, unknown>)
+                        : url;
 
-            xhr.open(method, newURl);
+                xhr.open(method, newURl);
 
-            for (const key in headers) {
-                xhr.setRequestHeader(key, headers[key]);
+                for (const key in headers) {
+                    xhr.setRequestHeader(key, headers[key]);
+                }
+
+                if (headersContentType === 'json') {
+                    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+                }
+
+                xhr.onload = function () {
+                    const response = buildApiResponse<T>(xhr, jsonParse);
+
+                    if (isApiResponseError(response)) {
+                        reject(response);
+                        return;
+                    }
+                    resolve(response);
+                };
+                xhr.onabort = function () {
+                    reject(buildApiResponse<T>(this, jsonParse));
+                };
+                xhr.onerror = function () {
+                    reject(buildApiResponse<T>(this, jsonParse));
+                };
+                xhr.ontimeout = function () {
+                    reject(buildApiResponse<T>(this, jsonParse));
+                };
+                xhr.withCredentials = true;
+
+                if (method === METHODS.GET || !data) {
+                    xhr.send();
+                } else {
+                    const body =
+                        headersContentType === 'json' ? JSON.stringify(data) : (data as XMLHttpRequestBodyInit);
+                    xhr.send(body);
+                }
+                if (timeout) {
+                    setTimeout(() => {
+                        xhr.abort();
+                    });
+                }
+            } catch (e) {
+                console.error(e);
             }
-
-            xhr.onload = function () {
-                resolve(xhr);
-            };
-
-            xhr.onabort = reject;
-            xhr.onerror = reject;
-            xhr.ontimeout = reject;
-
-            if (method === METHODS.GET || !data) {
-                xhr.send();
-            } else {
-                xhr.send(JSON.stringify(data));
-            }
-
-            setTimeout(() => {
-                xhr.abort();
-            }, timeout);
         });
     };
 }

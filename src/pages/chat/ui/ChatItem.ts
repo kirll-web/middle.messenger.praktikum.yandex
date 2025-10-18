@@ -25,7 +25,7 @@ export class ChatItem extends Block {
                 message: lastMessage,
                 userMessage: !!thisUserMessage
             }),
-            ChatItemCounter: messageCount && new ChatItemCounter({ count: messageCount }),
+            ChatItemCounter: messageCount ? new ChatItemCounter({ count: messageCount }) : undefined,
             Avatar: Avatar,
             events: {
                 click: onClick
