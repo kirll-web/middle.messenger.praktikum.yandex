@@ -38,7 +38,6 @@ describe('HTTPTransport', () => {
     let OriginalXHR: typeof XMLHttpRequest;
 
     beforeEach(() => {
-        //@ts-expect-error подменяем конструктор, чтобы использовать этот экземпляр
         OriginalXHR = global.XMLHttpRequest;
         //@ts-expect-error подменяем конструктор, чтобы использовать этот экземпляр
         global.XMLHttpRequest = MockXHR;
@@ -46,7 +45,6 @@ describe('HTTPTransport', () => {
     });
 
     afterEach(() => {
-        //@ts-expect-error подменяем конструктор, чтобы использовать этот экземпляр
         global.XMLHttpRequest = OriginalXHR;
     });
 
