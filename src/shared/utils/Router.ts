@@ -6,7 +6,7 @@ export class Router {
     history = window.history;
     private _currentRoute?: Route;
     _rootQuery?: string;
-    private static __instance?: Router;
+    protected static __instance?: Router;
 
     currentRoutePath?: string;
 
@@ -71,5 +71,9 @@ export class Router {
 
     getRoute(pathname: string) {
         return this.routes.find((route) => route.match(pathname));
+    }
+
+    public reset() {
+        Router.__instance = undefined;
     }
 }

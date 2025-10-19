@@ -21,7 +21,7 @@ export default defineConfig({
             '@assets': resolve(__dirname, '../src/assets'),
             '@shared': resolve(__dirname, '../src/shared'),
             '@pages': resolve(__dirname, '../src/pages'),
-            "@entities": resolve(__dirname, '../src/entities'),
+            '@entities': resolve(__dirname, '../src/entities')
         }
     },
     assetsInclude: ['**/*.hbs'],
@@ -30,6 +30,13 @@ export default defineConfig({
             scss: {
                 additionalData: `@use "@shared/styles/variables.scss" as *;`
             }
+        }
+    },
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        coverage: {
+            reporter: ['text', 'html']
         }
     }
 });

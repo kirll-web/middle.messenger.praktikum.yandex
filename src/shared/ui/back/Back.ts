@@ -9,7 +9,10 @@ export class Back extends Block {
         super({
             Icon: new BackIcon(),
             events: {
-                click: () => this.router.back()
+                click: () => {
+                    console.log('back');
+                    this.router.back();
+                }
             }
         });
         this.router = new Router();
